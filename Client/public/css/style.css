@@ -1,0 +1,27 @@
+.footer-background {
+    background-color: #FAE6D4; 
+}
+
+.font-footer {
+    font-family: 'Hannari', sans-serif; 
+    font-size: 2em; 
+    margin-left: 10px;
+}
+
+.font-footer2 {
+    font-family: 'Hannari', sans-serif; 
+    font-size: 1em;
+    color: #897272;
+}
+
+.footer-height {
+    height: 200px;
+}
+
+.footer-text, .book-text {
+    white-space: nowrap; /* Viết liền */
+}
+
+.footer-text {
+    color: #000000; /* Màu chữ đen cho phần "Smart" */
+}
