@@ -1,15 +1,34 @@
+.search-bar {
+    width: 100%;
+
+    .search-field {
+        align-self: center;
+        width: 30%;
+        border-radius: 10px;
+    }
+}
+
+
+.pointer {
+    cursor: pointer;
+}
+
+.font-header {
+    display: inline-block;
+}
+
 .footer-background {
-    background-color: #FAE6D4; 
+    background-color: #FAE6D4;
 }
 
 .font-footer {
-    font-family: 'Hannari', sans-serif; 
-    font-size: 2em; 
+    font-family: 'Hannari', sans-serif;
+    font-size: 2em;
     margin-left: 10px;
 }
 
 .font-footer2 {
-    font-family: 'Hannari', sans-serif; 
+    font-family: 'Hannari', sans-serif;
     font-size: 1em;
     color: #897272;
 }
@@ -18,11 +37,31 @@
     height: 200px;
 }
 
-.footer-text, .book-text {
-    white-space: nowrap; /* Viết liền */
+.footer-text {
+    white-space: nowrap;
 }
 
 .footer-text {
+<<<<<<< HEAD
     color: #000000; /* Màu chữ đen cho phần "Smart" */
 }
 
+=======
+    color: #000000;
+}
+
+.second-nav {
+    background-color: #2B3467;
+
+    i[class*="-icon"],
+    span[class*="-icon"] {
+        color: white;
+    }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    color: #000;
+    /* Set the color to black */
+}
+>>>>>>> 3a987f7fd785c275bf5e2a1d987c6990c08f842f
