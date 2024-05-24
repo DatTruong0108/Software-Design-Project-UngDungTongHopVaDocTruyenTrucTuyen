@@ -5,16 +5,18 @@ const path = require('path');
 const bodyparser = require("body-parser");
 const methodOverride = require("method-override");
 
+const route=require("./Server/routes");
+
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
-app.use('/public/image', express.static(__dirname + '/public/image'));
-app.use('/public/js', express.static(__dirname + '/public/js'));
-app.use('/public/css', express.static(__dirname + '/public/css'));
-app.use(express.static(__dirname + '/public'));
+app.use('/Client/public/image', express.static(__dirname + '/Client/public/image'));
+app.use('/Client/public/js', express.static(__dirname + '/Client/public/js'));
+app.use('/Client/public/css', express.static(__dirname + '/Client/public/css'));
+app.use(express.static(__dirname + '/Client/public'));
 app.use(express.urlencoded({
     extended: true
 }));
@@ -31,9 +33,12 @@ app.engine(
     })
 );
 
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));  // Sửa 'view' thành 'views'
 
-app.get('/', (req, res) => res.render('homepage'));
+
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'Client/views'));  // Sửa 'view' thành 'views'
+
+route(app);
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

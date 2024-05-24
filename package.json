@@ -2,9 +2,9 @@
   "name": "software-design-project-ungdungtonghopvadoctruyentructuyem",
   "version": "1.0.0",
   "description": "Đồ án môn học Thiết kế phần mềm - HCMUS",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon ./Client/server.js"
+    "start": "nodemon ./server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,8 +16,13 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
+<<<<<<< HEAD
     "jquery": "^3.7.1",
+=======
+    "fs": "^0.0.1-security",
+>>>>>>> c556540be85b9702ea49c77cc09349651a6616d1
     "method-override": "^3.0.0",
+    "multer": "^1.4.5-lts.1",
     "path": "^0.12.7"
   },
   "devDependencies": {
