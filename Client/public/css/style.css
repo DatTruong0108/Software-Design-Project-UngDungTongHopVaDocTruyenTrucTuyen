@@ -102,3 +102,56 @@
 .nav-link.dropdown-toggle:focus {
     background-color: #4F61C5; /* Đổi màu nền tại đây */
 }
+
+.dropdown-menu-text {
+    color: #ffffff; 
+    flex: 1; 
+    margin-left: 10px;
+    text-decoration: none; /* Loại bỏ gạch chân dưới chữ */
+}
+
+.custom-select {
+    width: 200px; 
+    margin-right: 10px;
+}
+
+.btn-export {
+    color:#2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-width: 2px; /* Tăng độ rộng viền */
+    border-style: solid; 
+}
+
+.btn-export:hover {
+    color:white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.name-novel {
+    text-align: center;
+    color:#2B3467;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif; 
+}
+
+.text-content {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif; 
+}
+
+.select-chapter {
+    border-radius: 0; 
+    background-color: #40A2D8;
+    color: white;
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px;
+}
+
+.pagination .page-item {
+    margin: 0 3px; /* Khoảng cách 5px giữa các phần tử */
+}
+
+
+
