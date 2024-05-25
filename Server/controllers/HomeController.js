@@ -82,7 +82,7 @@ class HomeController {
         const newNovelsList=await scrapeNewNovelsList();
 
         // res.render("homepage",{hotNovels: hotNovelsList,newNovels:newNovelsList})
-        res.render("readpage",{hotNovels: hotNovelsList,newNovels:newNovelsList})
+        res.render("readpage")
     }
 }
 

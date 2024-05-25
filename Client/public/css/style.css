@@ -110,9 +110,28 @@
     text-decoration: none; /* Loại bỏ gạch chân dưới chữ */
 }
 
+.dropdown-export-text {
+    color: black; 
+    flex: 1; 
+    margin-left: 20px;
+    text-decoration: none; /* Loại bỏ gạch chân dưới chữ */
+}
+
+.custom-card {
+    max-width: 400px; /* Hoặc giá trị chiều ngang mong muốn */
+    margin: 0 auto; /* Căn giữa card */
+}
+
+
 .custom-select {
     width: 200px; 
     margin-right: 10px;
+}
+
+.custom-select-export {
+    width: 300px; 
+    margin-right: 20px;
+
 }
 
 .btn-export {
@@ -127,6 +146,19 @@
     color:white;
     font-weight: bold;
     background-color: #EB455F;
+}
+
+.btn-export-file {
+    color:white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.btn-export-file:hover {
+    color:#2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-style: solid; 
 }
 
 .name-novel {
@@ -152,6 +184,3 @@
 .pagination .page-item {
     margin: 0 3px; /* Khoảng cách 5px giữa các phần tử */
 }
-
-
-

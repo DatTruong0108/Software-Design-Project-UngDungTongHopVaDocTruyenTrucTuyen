@@ -1,7 +1,46 @@
 <div class="container mt-4">
-    <div class="d-flex">
+    <div class="d-flex align-items-center justify-content-center">
         <div class="p-2 flex-shrink-1 ms-auto">
-            <button type="button" class="btn btn-export">Xuất ebook</button>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-export" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Xuất ebook
+            </button>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-center w-100">Xuất ebook</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signup-form">
+                            <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                                <a class="dropdown-export-text"><strong>Chọn chương</strong></a>
+                                <select class="form-select custom-select-export " aria-label="Default select example">
+                                    <option value="All" selected>All</option>
+                                    <option value="chap1">Chương 1</option>
+                                    <option value="chap2">Chương 2</option>
+                                    <option value="chap3">Chương 3</option>
+                                </select>
+                            </li>
+                            <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                                <a class="dropdown-export-text"><strong>Dạng tập tin</strong></a>
+                                <select class="form-select custom-select-export " aria-label="Default select example">
+                                    <option value="prc" selected>prc</option>
+                                    <option value="epub">epub</option>
+                                    <option value="pdf">pdf</option>
+                                </select>
+                            </li>
+                            <div class="d-grid gap-2 col-4 mx-auto mt-3">
+                                <button type="button" class="btn btn-export-file">Xuất file</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
