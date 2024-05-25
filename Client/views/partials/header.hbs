@@ -1,54 +1,78 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg header-background">
   <div class="row top search-bar d-flex justify-content-between">
-    <div class="col-3 header__left pointer">
-      <img src="/image/book logo.png" class="img-fluid" width="50" height="50" alt="Logo">
+    <div class="col-1 header__left pointer d-flex align-items-center">
+      <img src="/image/book logo.png" class="img-fluid" width="90" height="90" alt="Logo" style="margin-left: 40px;">
       <h1 class="font-header mb-0">
-        <span class="header__left-text">Novel Ease</span>
+        <span class="header__left-text footer-text" style="margin-left: 10px;">Novel Ease</span>
       </h1>
     </div>
-    <form class="col-9 search-field form-inline d-flex" method="POST" action="" role="search">
-      <input class="form-control me-2" type="search" placeholder="Nhập tên truyện hoặc tác giả" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">Tìm</button>
+    <form class="col-11 search-field form-inline d-flex mx-auto" method="POST" action="" role="search">
+      <input class="form-control" type="search" placeholder="Nhập tên truyện hoặc tác giả" aria-label="Search">
+      <button class="btn btn-search" type="submit">Tìm kiếm</button>
     </form>
   </div>
 </nav>
 <nav class="navbar navbar-expand-lg second-nav">
   <div class="container-fluid">
-    <a class="navbar-brand text align-items-center justify-content-center" href="#">
-      <i class="home-icon fa-solid fa-house"></i>
-    </a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-            <span class="text-icon">Danh sách</span>&nbsp<i class="list-icon fa-solid fa-list"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-            <span class="text-icon">Thể loại</span>&nbsp<i class="list-icon fa-solid fa-list"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="true">
-            <span class="text-icon">Tùy chỉnh/Tác giả</span>&nbsp<i class="list-icon fa-solid fa-list"></i>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-      </ul>
+    <div class="col-4 header__left pointer d-flex align-items-center">
+      <a class="navbar-brand text align-items-center justify-content-center" href="#" style="margin-left: 40px;">
+        <i class="home-icon fa-solid fa-house"></i>
+      </a>
+    </div>
+    <div class="col-8 d-flex justify-content-center">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown" style="margin-left: 40px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Danh sách</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="margin-left: 30px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Thể loại</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="margin-left: 30px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-gear white-icon"></i>&nbsp<span class="text-icon">Tùy chỉnh</span>
+            </a>
+            <ul class="dropdown-menu custom-dropdown-menu" style="min-width: 300px;">
+              <li class="d-flex align-items-center">
+                <a style="color: #ffffff;">Size chữ</a>
+                <select class="form-select" style="width: 200px;" aria-label="Default select example">
+                  <option selected>22</option>
+                  <option value="16">16</option>
+                  <option value="18">18</option>
+                  <option value="20">20</option>
+                  <option value="22">22</option>
+                  <option value="24">24</option>
+                  <option value="26">26</option>
+                  <option value="28">28</option>
+                  <option value="30">30</option>
+                  <option value="32">32</option>
+                  <option value="34">34</option>
+                  <option value="36">36</option>
+                  <option value="38">38</option>
+                  <option value="40">40</option>
+                </select>       
+              </li>
+                     
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </nav>
