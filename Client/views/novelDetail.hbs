@@ -1,51 +1,86 @@
- <div class="container-fluid">
-    <div class="title-list mt-4">
-        <h3>THÔNG TIN CHI TIẾT</h3>
-    </div>
-        <div class="product-detail">
-            <div class="row">
-                <div class="col-md-5 d-flex align-items-center justify-content-center">
-                    <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid">
-                </div>
-                <div class="col-md-7 product-info">
-                    <h1>{{novel.title}}</h1>
-                    <hr> 
-                    <p><strong>Tác giả:</strong> {{novel.author}}</p>
-                    <div class="description">
-                        {{{convertToHtml novel.description}}}
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                       <p style="font-size: 1em;"><strong>{{book.price}}</strong></p>
-                           
-                    </div>
-                    <hr>
-                </div>
-            </div>
-    </div>
-
-    <div class="title-list mt-4">
-        <h3>DANH SÁCH CHƯƠNG</h3>
-        <div class="chapter-list">
-            <div class="row">
-  <div class="col-xs-12 col-sm-6">
-    <ul>
-      {{#each (splitArray novel.chapters 2 0)}}
-        <li>
-          <a class="text-link" href="{{this.chapterUrl}}">{{this.chapterTitle}}</a>
-        </li>
-      {{/each}}
-    </ul>
+<div class="container-fluid">
+  <div class="title-list mt-4">
+    <h3>THÔNG TIN CHI TIẾT</h3>
   </div>
-  <div class="col-xs-12 col-sm-6">
-    <ul>
-      {{#each (splitArray novel.chapters 2 1)}}
-        <li>
-          <a class="text-link" href="{{this.chapterUrl}}">{{this.chapterTitle}}</a>
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-</div>
+  <div class="product-detail">
+    <div class="row">
+      {{!-- col-md-5 d-flex align-items-center justify-content-center --}}
+      <div class="col-md-5 d-flex">
+        <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid novel-img">
+      </div>
+      <div class="col-md-7 product-info">
+        <div class="info">
+          <h1>{{novel.title}}</h1>
+          <hr>
+          <p><strong>Tác giả:</strong> {{novel.author}}</p>
+          <p><strong>Thể loại:</strong>
+            {{#eachGenres novel.genres novel.genreUrls}}
+            <a class="novel-genres" href="{{url}}">{{name}}</a>{{#if last}}{{else}}, {{/if}}
+            {{/eachGenres}}
+          </p>
         </div>
+        <div class="description">
+          <p id="novel-description">{{{convertToHtml novel.description}}}</p>
+          <button id="toggle-description" style="display: none;">Xem thêm</button>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <p style="font-size: 1em;"><strong>{{book.price}}</strong></p>
+        </div>
+        <hr>
+      </div>
     </div>
+  </div>
+
+  <div class="title-list mt-4">
+    <h3>DANH SÁCH CHƯƠNG</h3>
+    <hr>
+    <div class="chapter-list">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6">
+          <ul>
+            {{#each (splitArray novel.chapters 2 0)}}
+            <li>
+              <a class="text-link" href="{{this.chapterUrl}}">{{this.chapterTitle}}</a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="col-xs-12 col-sm-6">
+          <ul>
+            {{#each (splitArray novel.chapters 2 1)}}
+            <li>
+              <a class="text-link" href="{{this.chapterUrl}}">{{this.chapterTitle}}</a>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const descriptionElement = document.getElementById('novel-description');
+    const toggleButton = document.getElementById('toggle-description');
+    const maxLength = 500; // Giới hạn độ dài mô tả
+
+    if (descriptionElement.innerText.length > maxLength) {
+      const originalText = descriptionElement.innerHTML;
+      const truncatedText = originalText.substring(0, maxLength) + '...';
+
+      descriptionElement.innerHTML = truncatedText;
+      toggleButton.style.display = 'inline';
+
+      toggleButton.addEventListener('click', function () {
+        if (descriptionElement.innerHTML === truncatedText) {
+          descriptionElement.innerHTML = originalText;
+          toggleButton.innerText = 'Thu gọn';
+        } else {
+          descriptionElement.innerHTML = truncatedText;
+          toggleButton.innerText = 'Xem thêm';
+        }
+      });
+    }
+  });
+</script>
