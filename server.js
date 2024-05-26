@@ -4,6 +4,7 @@ const {engine} = require('express-handlebars');
 const path = require('path');
 const bodyparser = require("body-parser");
 const methodOverride = require("method-override");
+const Handlebars = require('handlebars');
 
 const route=require("./Server/routes");
 
@@ -23,12 +24,39 @@ app.use(express.urlencoded({
 app.use(express.json());
 app.use(methodOverride('_method'));
 
+Handlebars.registerHelper('eachGenres', function(genres, genreUrls, options) {
+    let result = '';
+    for (let i = 0; i < genres.length; i++) {
+        result += options.fn({ name: genres[i], url: genreUrls[i], last: i === genres.length - 1 });
+    }
+    return result;
+});
+Handlebars.registerHelper('convertToHtml', function(html) {
+    // Convert HTML entities to actual characters
+    const decodedHtml = new Handlebars.SafeString(html);
+    return decodedHtml;
+});
+Handlebars.registerHelper('splitArray', function(array, parts, partIndex) {
+    const result = [];
+    const len = Math.ceil(array.length / parts);
+    for (let i = 0; i < len; i++) {
+        if (array[i + len * partIndex]) {
+            result.push(array[i + len * partIndex]);
+        }
+    }
+    return result;
+});
+
 app.engine(
     'hbs',
     engine({
         extname: '.hbs',
         helpers: {
             sum: (a, b) => a + b,
+            eachGenres: Handlebars.helpers.eachGenres,
+            convertToHtml: Handlebars.helpers.convertToHtml,
+            splitArray: Handlebars.helpers.splitArray
+
         }
     })
 );

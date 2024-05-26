@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const HomeController=require('../controllers/HomeController');
 
+route.get('/:slug',HomeController.novelDetail);
 route.get('/',HomeController.index);
 
 module.exports=route;
