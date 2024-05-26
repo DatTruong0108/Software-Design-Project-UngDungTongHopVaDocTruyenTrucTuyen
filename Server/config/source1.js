@@ -109,15 +109,33 @@ class Source1 {
     
             // Load the HTML into cheerio
             const $ = cheerio.load(data);
+            // console.log(data)
     
             // Extract novel information
             const title = $('h3.title[itemprop="name"]').text().trim();
             const image = $('img[itemprop="image"]').attr('src');
             const author = $('a[itemprop="author"]').text().trim();
+            const authorUrl = $('a[itemprop="author"]').attr('href');
+
             const genres = [];
             $('a[itemprop="genre"]').each((i, el) => {
                 genres.push($(el).text().trim());
             });
+            const uniqueGenres = [];
+            const seen = {};
+            genres.forEach((genre) => {
+                const lowerCaseGenre = genre.toLowerCase();
+                if (!seen[lowerCaseGenre]) {
+                    seen[lowerCaseGenre] = true;
+                    uniqueGenres.push(genre);
+                }
+            });
+            const genreUrls = [];
+            $('a[itemprop="genre"]').each((i, el) => {
+                genreUrls.push($(el).attr('href'));
+            });
+            // console.log(genres)
+
             const source = $('.source').text().trim();
             const status = $('.text-success').text().trim();
             const ratingValue = $('span[itemprop="ratingValue"]').text().trim();
@@ -137,7 +155,9 @@ class Source1 {
                 title,
                 image,
                 author,
-                genres,
+                authorUrl,
+                genres: uniqueGenres,
+                genreUrls,
                 source,
                 status,
                 rating: {
