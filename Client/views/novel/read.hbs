@@ -45,10 +45,10 @@
     </div>
 
     <div class="name-novel">
-        TÂY DU KÝ
+        {{content.storyName}}
     </div>
     <div class="text-content text-center">
-        Chương 1: Khí thiêng kết tụ sanh khỉ đá Tâm thành tu niệm đạo nhân gian
+       {{content.chapterTitle}}
     </div>
 </div>
 
@@ -83,8 +83,8 @@
         </ul>
     </nav>
 
-    <div class="text-content text-center mb-4">
-        Content
+    <div class="text-content text-justify mb-4">     
+        {{{convertToHtml content.chapterContent}}}
     </div>
 
     <nav aria-label="Page navigation example">

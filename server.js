@@ -33,7 +33,8 @@ Handlebars.registerHelper('eachGenres', function(genres, genreUrls, options) {
 });
 Handlebars.registerHelper('convertToHtml', function(html) {
     // Convert HTML entities to actual characters
-    const decodedHtml = new Handlebars.SafeString(html);
+    let decodedHtml = new Handlebars.SafeString(html);
+    decodedHtml = Handlebars.Utils.escapeExpression(decodedHtml).replace(/\n/g, '<br>');
     return decodedHtml;
 });
 Handlebars.registerHelper('splitArray', function(array, parts, partIndex) {
