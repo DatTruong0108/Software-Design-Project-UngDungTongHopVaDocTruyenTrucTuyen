@@ -6,6 +6,7 @@ class HomeController {
         const newNovelsList=await Source1.scrapeNewNovelsList();
 
         res.render("homepage",{hotNovels: hotNovelsList,newNovels:newNovelsList})
+        //res.render("readpage")
     }
 
     async novelDetail(req, res, next) {

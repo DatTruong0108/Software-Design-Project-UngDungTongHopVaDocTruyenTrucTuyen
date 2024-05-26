@@ -18,7 +18,11 @@
 }
 
 .footer-background {
-    background-color: #FAE6D4;
+    background-color: #FCFFE7;
+}
+
+.header-background {
+    background-color: #FCFFE7;
 }
 
 .font-footer {
@@ -42,10 +46,10 @@
 }
 
 .footer-text {
-    color: #000000; /* Màu chữ đen cho phần "Smart" */
+    color: #2B3467; /* Đổi màu văn bản */
+    font-family: 'Roboto Serif', serif; /* Đổi kiểu chữ */
+    font-weight: 600; /* Semibold thường tương đương với 600 */
 }
-
-
 
 .second-nav {
     background-color: #2B3467;
@@ -103,4 +107,122 @@
     background-color: #007bff;
     color: #fff;
     border: none;
+}
+.btn-search {
+    color: #ffffff; /* Màu chữ trắng */
+    background-color: #2B3467; /* Nền màu #2B3467 */
+    border: none; /* Loại bỏ viền mặc định */
+    padding: 10px 5px; /* Điều chỉnh khoảng cách bên trong */
+    border-radius: 5px; /* Bo góc nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
+    min-width: 80px; /* Đặt chiều rộng tối thiểu cho nút */
+    text-align: center; /* Căn giữa chữ trong nút */
+}
+
+.btn-search:hover {
+    background-color: #4F61C5; /* Màu nền khi hover */
+}
+
+.white-icon {
+    color: white; /* Màu trắng cho biểu tượng */
+}
+
+.white-icon:hover {
+    color: #BAD7E9; /* Màu trắng cho biểu tượng */
+}
+
+.list-group-item {
+    background-color: #EFF8FE; /* Màu nền cho từng mục trong danh sách */
+}
+
+.custom-dropdown-menu {
+    background-color: #4F61C5;
+}
+
+.nav-link.dropdown-toggle:focus {
+    background-color: #4F61C5; /* Đổi màu nền tại đây */
+}
+
+.dropdown-menu-text {
+    color: #ffffff; 
+    flex: 1; 
+    margin-left: 10px;
+    text-decoration: none; /* Loại bỏ gạch chân dưới chữ */
+}
+
+.dropdown-export-text {
+    color: black; 
+    flex: 1; 
+    margin-left: 20px;
+    text-decoration: none; /* Loại bỏ gạch chân dưới chữ */
+}
+
+.custom-card {
+    max-width: 400px; /* Hoặc giá trị chiều ngang mong muốn */
+    margin: 0 auto; /* Căn giữa card */
+}
+
+
+.custom-select {
+    width: 200px; 
+    margin-right: 10px;
+}
+
+.custom-select-export {
+    width: 300px; 
+    margin-right: 20px;
+
+}
+
+.btn-export {
+    color:#2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-width: 2px; /* Tăng độ rộng viền */
+    border-style: solid; 
+}
+
+.btn-export:hover {
+    color:white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.btn-export-file {
+    color:white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.btn-export-file:hover {
+    color:#2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-style: solid; 
+}
+
+.name-novel {
+    text-align: center;
+    color:#2B3467;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif; 
+}
+
+.text-content {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif; 
+}
+
+.select-chapter {
+    border-radius: 0; 
+    background-color: #40A2D8;
+    color: white;
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px;
+}
+
+.pagination .page-item {
+    margin: 0 3px; /* Khoảng cách 5px giữa các phần tử */
 }
