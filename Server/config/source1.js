@@ -16,6 +16,12 @@ function getSlugFromUrl(url) {
    
 }
 
+function extractChapterNumber(chapterTitle) {
+    const regex = /Chương\s+(\d+)/i;
+    const match = chapterTitle.match(regex);
+    return match ? match[1] : null;
+}
+
 
 class Source1 {
     async srapeHotNovelsList() {
@@ -74,8 +80,12 @@ class Source1 {
                 const latestChapter = $(element).find('div.col-chap a').text().trim();
                 const latestChapterUrl = $(element).find('div.col-chap a').attr('href');
 
+                const chapterNumber = extractChapterNumber(latestChapter);
+               
+
                 const updateTime = $(element).find('div.col-time').text().trim();
                 const slug=getSlugFromUrl(url)
+                const chapterSlug=slug+'/chuong-'+chapterNumber;
                 if (title && url){
                     truyenDetails.push({ title,
                         url,
@@ -83,6 +93,7 @@ class Source1 {
                         genreUrls,
                         latestChapter,
                         latestChapterUrl,
+                        chapterSlug,
                         updateTime,
                         slug });
                 }
@@ -147,10 +158,12 @@ class Source1 {
             $('.list-chapter li a').each((i, el) => {
                 const chapterTitle = $(el).text().trim();
                 const chapterUrl = $(el).attr('href');
-                chapters.push({ chapterTitle, chapterUrl });
+                const chapterSlug=slug+"/chuong-"+(i+1);
+                chapters.push({ chapterTitle, chapterUrl,chapterSlug });
             });
+            
     
-            // Return the extracted information
+            // Return the extracted informatiosn
             return {
                 title,
                 image,
@@ -165,10 +178,52 @@ class Source1 {
                     count: ratingCount
                 },
                 description,
-                chapters
+                chapters,
+                slug
             };
         } catch (error) {
             console.error('Error fetching novel info:', error);
+        }
+    }
+
+    async scrapeChapterData(slug) {
+        try {
+            const chapterUrl=url+slug;
+            // Fetch the HTML content from the URL
+            const { data } = await axios.get(chapterUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+            
+            // Load the HTML content into cheerio
+            const $ = cheerio.load(data);
+    
+            // Extract the story name
+            const storyName = $('a.truyen-title').text().trim();
+    
+            // Extract the chapter title
+            const chapterTitle = $('a.chapter-title').text().trim();
+            $('#ads-chapter-pc-top').remove();
+    
+            // Extract the chapter content
+            const chapterContent = $('#chapter-c')
+                .html()
+                .replace(/<br\s*\/?>/gi, '\n')
+                .replace(/<\/?p>/gi, '')
+                .trim();
+    
+            // Create the result object
+            const result = {
+                storyName,
+                chapterTitle,
+                chapterContent
+            };
+    
+            return result;
+        } catch (error) {
+            console.error(`Error fetching data from ${url}:`, error);
+            return null;
         }
     }
     

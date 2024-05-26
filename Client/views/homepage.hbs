@@ -76,7 +76,7 @@
                                 <td>{{#eachGenres genres genreUrls}}
                                       <a class="text-link" href="{{this.url}}">{{this.name}}</a>{{#unless @last}}, {{/unless}}
                                      {{/eachGenres}}</td>
-                                <td><a class="text-link" href="{{latestChapterUrl}}">{{latestChapter}}</a></td>
+                                <td><a class="text-link" href="/{{chapterSlug}}/">{{latestChapter}}</a></td>
                                 <td>{{updateTime}}</td>
                             </tr>
                             {{/each}}
