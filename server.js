@@ -5,6 +5,8 @@ const path = require('path');
 const bodyparser = require("body-parser");
 const methodOverride = require("method-override");
 const Handlebars = require('handlebars');
+const cookieParser = require('cookie-parser');
+
 
 const route=require("./Server/routes");
 
@@ -13,7 +15,7 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
-
+app.use(cookieParser());
 app.use('/Client/public/image', express.static(__dirname + '/Client/public/image'));
 app.use('/Client/public/js', express.static(__dirname + '/Client/public/js'));
 app.use('/Client/public/css', express.static(__dirname + '/Client/public/css'));
