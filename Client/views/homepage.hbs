@@ -174,5 +174,49 @@
                 }
             });
         });
+        $('#searchForm').on('submit', function(e){
+            e.preventDefault();
+            var searchInput = $('#searchInput').val();
+            var url = 'http://localhost:3000/search?name=' + searchInput;
+            $.ajax({
+                url: url,
+                method: 'POST',
+                success: function(data) {
+                    var hotNovels = data.searchResult;  // Adjust according to the structure of the response
+                    var container = $('#bookListContainer');
+                    container.empty();  // Clear the current content
+                    if(hotNovels.length==0){
+                        var novelHtml = `
+                            <div class="col-3 mb-4 ml-4">
+                                No result
+                            </div>
+                        `;
+                        container.append(novelHtml);
+                    }
+                    else{
+                        hotNovels.forEach(function(novel) {
+                            var novelHtml = `
+                                <div class="col-3 mb-4 ml-4">
+                                    <div class="card h-100 position-relative">
+                                        <a href="/${novel.slug}/">
+                                            <img src="${novel.image}" class="card-img img-fluid object-fit-cover w-100" alt="${novel.title}">
+                                        </a>
+                                        <div class="card-body d-flex flex-column position-absolute bottom-0 start-50 translate-middle-x w-100" style="color: #fff; background-color: rgba(0, 0, 0, 0.5);">
+                                            <h6 class="card-title text-center">${novel.title}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.append(novelHtml);
+                        });
+                    }
+                    const newUrl = `/search?name=${searchInput}`;
+                    history.pushState({ searchInput: searchInput}, '', newUrl);
+                },
+                error: function(err) {
+                    console.error('Error loading content:', err);
+                }
+            });
+        });
     });
 </script>

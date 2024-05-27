@@ -49,6 +49,41 @@ class HomeController {
 
         res.status(200).json({ success: true, hotNovels: result, newNovels: result});
     }
+    async searchPost(req, res, next){
+        const name = req.query.name;
+        const hotNovelsList=await Source1.srapeHotNovelsList();
+        const filteredNovels = hotNovelsList.filter(novel => novel.title.includes(name));
+        return res.json({searchResult:filteredNovels})
+    }
+    async searchGet(req, res, next){
+        const name = req.query.name;
+        const hotNovelsList=await Source1.srapeHotNovelsList();
+        const newNovelsList=await Source1.scrapeNewNovelsList();
+        const navbarList=await Source1.scrapeGenres();
+
+        const historyList=[];
+        if (req.cookies.historyList){
+            const history=JSON.parse(req.cookies.historyList);
+
+           for (const item of history){
+            const novel=await Source1.scrapeNovelInfo(item.name.slice(1));
+            const temp={
+                title: novel.title,
+                slug: novel.slug,
+                chapterNumber: item.chapterNumber,
+            }
+            historyList.push(temp)
+        };
+        }
+        const filteredNovels = hotNovelsList.filter(novel => novel.title.includes(name));
+
+        return res.render("homepage",{hotNovels: filteredNovels,
+            newNovels:newNovelsList, 
+            genresList: navbarList.genres,
+            hotSelect:navbarList.options, 
+            topicsList: navbarList.danhSachList, 
+            historyList})
+    }
 }
 
 module.exports = new HomeController;
