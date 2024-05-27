@@ -53,10 +53,11 @@ app.engine(
     engine({
         extname: '.hbs',
         helpers: {
-            sum: (a, b) => a + b,
+            extract: (a, b) => a - b,
             eachGenres: Handlebars.helpers.eachGenres,
             convertToHtml: Handlebars.helpers.convertToHtml,
-            splitArray: Handlebars.helpers.splitArray
+            splitArray: Handlebars.helpers.splitArray,
+            sum: (a, b) => Number(a) + Number(b),
 
         }
     })
