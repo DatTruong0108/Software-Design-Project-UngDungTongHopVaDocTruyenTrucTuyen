@@ -241,12 +241,26 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.select-chap {
+    border-radius: 0;
+    background-color: #40A2D8;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
 .select-chapter {
     border-radius: 0;
     background-color: #40A2D8;
     color: white;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-size: 16px 16px;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    padding-right: 24px;
 }
 
 .pagination .page-item {
