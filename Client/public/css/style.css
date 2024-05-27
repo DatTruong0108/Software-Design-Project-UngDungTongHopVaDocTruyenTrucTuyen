@@ -206,6 +206,7 @@
     font-weight: bold;
     border-color: #EB455F;
     border-width: 2px;
+    background-color: white;
     /* Tăng độ rộng viền */
     border-style: solid;
 }
@@ -236,9 +237,17 @@
     font-family: 'Roboto', sans-serif;
 }
 
+.text-name-chap {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color:#767676;
+}
+
 .text-content {
     font-size: 20px;
     font-family: 'Roboto', sans-serif;
+    color: #000;
+    line-height: 1.15;
 }
 
 .select-chap {
@@ -306,3 +315,131 @@
 }
 
 /* fae6d47d */
+/* Màu nền */
+.bg-peachpuff {
+    background-color: #fae6d47d;
+}
+
+.bg-cream {
+    background-color: #FCFFE7;
+}
+
+.bg-gray {
+    background-color: #eae8e8;
+}
+
+/* CSS cho các lựa chọn text-content */
+.size-16 {
+    font-size: 16px;
+}
+
+.size-18 {
+    font-size: 18px;
+}
+
+.size-20 {
+    font-size: 20px;
+}
+
+.size-22 {
+    font-size: 22px;
+}
+
+.size-24 {
+    font-size: 24px;
+}
+
+.size-26 {
+    font-size: 26px;
+}
+
+.size-28 {
+    font-size: 28px;
+}
+
+.size-30 {
+    font-size: 30px;
+}
+
+.size-32 {
+    font-size: 32px;
+}
+
+.size-34 {
+    font-size: 34px;
+}
+
+.size-36 {
+    font-size: 36px;
+}
+
+.size-38 {
+    font-size: 38px;
+}
+
+.size-40 {
+    font-size: 40px;
+}
+
+/* Font chữ */
+.font-arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.font-timesnewroman {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-helvetica {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Màu chữ */
+.text-color-black {
+    color: #000;
+}
+
+.text-color-red {
+    color: red;
+}
+
+.text-color-green {
+    color: green;
+}
+
+.text-color-blue {
+    color: blue;
+}
+
+.text-color-orange {
+    color: orangered;
+}
+
+/* Định nghĩa độ giãn dòng */
+.line-height-1 {
+    line-height: 1;
+}
+
+.line-height-1-1-5 {
+    line-height: 1.15;
+}
+
+.line-height-1-5 {
+    line-height: 1.5;
+}
+
+.line-height-2 {
+    line-height: 2;
+}
+
+.line-height-2-5 {
+    line-height: 2.5;
+}
+
+.line-height-3 {
+    line-height: 3;
+}
