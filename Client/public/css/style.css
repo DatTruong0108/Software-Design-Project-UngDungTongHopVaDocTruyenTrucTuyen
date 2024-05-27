@@ -1,0 +1,445 @@
+.search-bar {
+    width: 100%;
+
+    .search-field {
+        align-self: center;
+        width: 30%;
+        border-radius: 10px;
+    }
+}
+
+
+.pointer {
+    cursor: pointer;
+}
+
+.font-header {
+    display: inline-block;
+}
+
+.footer-background {
+    background-color: #FCFFE7;
+}
+
+.header-background {
+    background-color: #FCFFE7;
+}
+
+.font-footer {
+    font-family: 'Hannari', sans-serif;
+    font-size: 2em;
+    margin-left: 10px;
+}
+
+.font-footer2 {
+    font-family: 'Hannari', sans-serif;
+    font-size: 1em;
+    color: #897272;
+}
+
+.footer-height {
+    height: 200px;
+}
+
+.footer-text {
+    white-space: nowrap;
+}
+
+.footer-text {
+    color: #2B3467;
+    /* Đổi màu văn bản */
+    font-family: 'Roboto Serif', serif;
+    /* Đổi kiểu chữ */
+    font-weight: 600;
+    /* Semibold thường tương đương với 600 */
+}
+
+.second-nav {
+    background-color: #2B3467;
+
+    i[class*="-icon"],
+    span[class*="-icon"] {
+        color: white;
+    }
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    color: #000;
+    /* Set the color to black */
+}
+
+.text-link {
+    color: #000;
+    text-decoration: none;
+}
+
+.product-detail {
+    max-width: 100%;
+    margin: 50px auto;
+    background-color: #fae6d47d;
+    padding: 30px;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-detail img {
+    max-width: 350px;
+    height: 350px;
+}
+
+.product-info {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.btn-add-to-cart {
+    margin-right: 20px;
+
+}
+
+.product-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.product-info p {
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.product-info .btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+}
+
+.btn-search {
+    color: #ffffff;
+    /* Màu chữ trắng */
+    background-color: #2B3467;
+    /* Nền màu #2B3467 */
+    border: none;
+    /* Loại bỏ viền mặc định */
+    padding: 10px 5px;
+    /* Điều chỉnh khoảng cách bên trong */
+    border-radius: 5px;
+    /* Bo góc nút */
+    font-size: 16px;
+    /* Kích thước chữ */
+    cursor: pointer;
+    /* Thay đổi con trỏ khi hover */
+    transition: background-color 0.3s;
+    /* Hiệu ứng chuyển đổi màu nền */
+    min-width: 80px;
+    /* Đặt chiều rộng tối thiểu cho nút */
+    text-align: center;
+    /* Căn giữa chữ trong nút */
+}
+
+.btn-search:hover {
+    background-color: #4F61C5;
+    /* Màu nền khi hover */
+}
+
+.white-icon {
+    color: white;
+    /* Màu trắng cho biểu tượng */
+}
+
+.white-icon:hover {
+    color: #BAD7E9;
+    /* Màu trắng cho biểu tượng */
+}
+
+.list-group-item {
+    background-color: #EFF8FE;
+    /* Màu nền cho từng mục trong danh sách */
+}
+
+.custom-dropdown-menu {
+    background-color: #4F61C5;
+}
+
+.nav-link.dropdown-toggle:focus {
+    background-color: #4F61C5;
+    /* Đổi màu nền tại đây */
+}
+
+.dropdown-menu-text {
+    color: #ffffff;
+    flex: 1;
+    margin-left: 10px;
+    text-decoration: none;
+    /* Loại bỏ gạch chân dưới chữ */
+}
+
+.dropdown-export-text {
+    color: black;
+    flex: 1;
+    margin-left: 20px;
+    text-decoration: none;
+    /* Loại bỏ gạch chân dưới chữ */
+}
+
+.custom-card {
+    max-width: 400px;
+    /* Hoặc giá trị chiều ngang mong muốn */
+    margin: 0 auto;
+    /* Căn giữa card */
+}
+
+
+.custom-select {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.custom-select-export {
+    width: 300px;
+    margin-right: 20px;
+
+}
+
+.btn-export {
+    color: #2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-width: 2px;
+    background-color: white;
+    /* Tăng độ rộng viền */
+    border-style: solid;
+}
+
+.btn-export:hover {
+    color: white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.btn-export-file {
+    color: white;
+    font-weight: bold;
+    background-color: #EB455F;
+}
+
+.btn-export-file:hover {
+    color: #2B3467;
+    font-weight: bold;
+    border-color: #EB455F;
+    border-style: solid;
+}
+
+.name-novel {
+    text-align: center;
+    color: #2B3467;
+    font-size: 40px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.text-name-chap {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color:#767676;
+}
+
+.text-content {
+    font-size: 20px;
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    line-height: 1.15;
+}
+
+.select-chap {
+    border-radius: 0;
+    background-color: #40A2D8;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+.select-chapter {
+    border-radius: 0;
+    background-color: #40A2D8;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-size: 16px 16px;
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    padding-right: 24px;
+}
+
+.pagination .page-item {
+    margin: 0 3px;
+    /* Khoảng cách 5px giữa các phần tử */
+}
+
+.novel-genres {
+    text-decoration: none;
+    color: #4E4E4E;
+}
+
+.novel-genres:hover {
+    text-decoration: underline;
+}
+
+.novel-img {
+    /* height: 100%; */
+    width: 50%;
+}
+
+.description {
+    position: relative;
+}
+
+#novel-description {
+    overflow: hidden;
+}
+
+#toggle-description {
+    background-color: #eb8d3a7d;
+    color: rgb(58, 57, 57);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+#toggle-description:hover {
+    background-color: #a3540f7d;
+}
+
+/* fae6d47d */
+/* Màu nền */
+.bg-peachpuff {
+    background-color: #fae6d47d;
+}
+
+.bg-cream {
+    background-color: #FCFFE7;
+}
+
+.bg-gray {
+    background-color: #eae8e8;
+}
+
+/* CSS cho các lựa chọn text-content */
+.size-16 {
+    font-size: 16px;
+}
+
+.size-18 {
+    font-size: 18px;
+}
+
+.size-20 {
+    font-size: 20px;
+}
+
+.size-22 {
+    font-size: 22px;
+}
+
+.size-24 {
+    font-size: 24px;
+}
+
+.size-26 {
+    font-size: 26px;
+}
+
+.size-28 {
+    font-size: 28px;
+}
+
+.size-30 {
+    font-size: 30px;
+}
+
+.size-32 {
+    font-size: 32px;
+}
+
+.size-34 {
+    font-size: 34px;
+}
+
+.size-36 {
+    font-size: 36px;
+}
+
+.size-38 {
+    font-size: 38px;
+}
+
+.size-40 {
+    font-size: 40px;
+}
+
+/* Font chữ */
+.font-arial {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
+
+.font-timesnewroman {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.font-helvetica {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Màu chữ */
+.text-color-black {
+    color: #000;
+}
+
+.text-color-red {
+    color: red;
+}
+
+.text-color-green {
+    color: green;
+}
+
+.text-color-blue {
+    color: blue;
+}
+
+.text-color-orange {
+    color: orangered;
+}
+
+/* Định nghĩa độ giãn dòng */
+.line-height-1 {
+    line-height: 1;
+}
+
+.line-height-1-1-5 {
+    line-height: 1.15;
+}
+
+.line-height-1-5 {
+    line-height: 1.5;
+}
+
+.line-height-2 {
+    line-height: 2;
+}
+
+.line-height-2-5 {
+    line-height: 2.5;
+}
+
+.line-height-3 {
+    line-height: 3;
+}

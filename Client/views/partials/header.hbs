@@ -1,0 +1,156 @@
+<nav class="navbar navbar-expand-lg header-background">
+  <div class="row top search-bar d-flex justify-content-between">
+    <div class="col-1 header__left pointer d-flex align-items-center">
+      <img src="/image/book logo.png" class="img-fluid" width="90" height="90" alt="Logo" style="margin-left: 40px;">
+      <h1 class="font-header mb-0">
+        <span class="header__left-text footer-text" style="margin-left: 10px;">Novel Ease</span>
+      </h1>
+    </div>
+    <form class="col-11 search-field form-inline d-flex mx-auto" method="POST" action="" role="search">
+      <input class="form-control" type="search" placeholder="Nhập tên truyện hoặc tác giả" aria-label="Search">
+      <button class="btn btn-search" type="submit">Tìm kiếm</button>
+    </form>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-lg second-nav">
+  <div class="container-fluid">
+    <div class="col-4 header__left pointer d-flex align-items-center">
+      <a class="navbar-brand text align-items-center justify-content-center" href="/" style="margin-left: 40px;">
+        <i class="home-icon fa-solid fa-house"></i>
+      </a>
+    </div>
+    <div class="col-8 d-flex justify-content-center">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown" style="margin-left: 40px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Danh sách</span>
+            </a>
+           <ul id="genresList" class="dropdown-menu ">
+              {{#each topicsList}}
+                <li><a class="dropdown-item" href="{{this.url}}">{{this.title}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="margin-left: 30px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Thể loại</span>
+            </a>
+            <ul id="genresList" class="dropdown-menu ">
+              {{#each genresList}}
+                <li><a class="dropdown-item" href="{{this.genreUrl}}">{{this.genre}}</a></li>
+              {{/each}}
+            </ul>
+          </li>
+          <li class="nav-item dropdown" style="margin-left: 30px;">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fa-solid fa-gear white-icon"></i>&nbsp<span class="text-icon">Tùy chỉnh</span>
+            </a>
+            <ul class="dropdown-menu custom-dropdown-menu" style="min-width: 350px;">
+              <li class="d-flex justify-content: space-between; align-items-center">
+                <a class="dropdown-menu-text">Size chữ</a>
+                <select id="text-content-select"  class="form-select custom-select" aria-label="Default select example">
+                  <option value="size-16">16</option>
+                  <option value="size-18">18</option>
+                  <option value="size-20" selected>20</option>
+                  <option value="size-22">22</option>
+                  <option value="size-24">24</option>
+                  <option value="size-26">26</option>
+                  <option value="size-28">28</option>
+                  <option value="size-30">30</option>
+                  <option value="size-32">32</option>
+                  <option value="size-34">34</option>
+                  <option value="size-36">36</option>
+                  <option value="size-38">38</option>
+                  <option value="size-40">40</option>
+                </select>       
+              </li>
+
+              <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                <a class="dropdown-menu-text">Font chữ</a>
+                <select id="font-select" class="form-select custom-select" aria-label="Default select example">
+                  <option value="font-roboto" selected>Roboto</option>
+                  <option value="font-timesnewroman">Times New Roman</option>
+                  <option value="font-helvetica">Helvetica</option>
+                  <option value="font-arial">Arial</option>
+                </select>       
+              </li>
+
+              <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                <a class="dropdown-menu-text">Màu nền</a>
+                <select id="background-color-select" class="form-select custom-select" aria-label="Default select example">
+                  <option value="bg-white" selected>Màu trắng</option>
+                  <option value="bg-cream">Màu kem</option>
+                  <option value="bg-peachpuff">Màu hồng đào</option>
+                  <option value="bg-gray">Màu xám nhạt</option>
+                  <option value="bg-dark">Màu tối</option>
+                </select>       
+              </li>
+
+              <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                <a class="dropdown-menu-text">Màu chữ</a>
+                <select id="text-color-select" class="form-select custom-select" aria-label="Default select example">
+                  <option value="text-color-black" selected>Đen</option>
+                  <option value="text-color-red">Đỏ</option>
+                  <option value="text-color-green">Xanh lá</option>
+                  <option value="text-color-blue">Xanh dương</option>
+                  <option value="text-color-orange">Cam</option>
+                </select>       
+              </li>
+
+              <li class="d-flex justify-content: space-between; align-items-center mt-2">
+                <a class="dropdown-menu-text">Độ dãn dòng</a>
+                <select id="line-height-select" class="form-select custom-select" aria-label="Default select example">
+                  <option value="line-height-1">1.0</option>
+                  <option value="line-height-1-1-5" selected>1.15</option>
+                  <option value="line-height-1-5">1.5</option>
+                  <option value="line-height-2">2.0</option>
+                  <option value="line-height-2-5">2.5</option>
+                  <option value="line-height-3">3.0</option>
+                </select>       
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+{{!-- <div class="container-fluid">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          Dropdown
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    <form class="d-flex" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
+  </div>
+</div> --}}
