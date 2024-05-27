@@ -2,6 +2,7 @@
 const { Scraper, Root, CollectContent, OpenLinks } = require('nodejs-web-scraper');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { options } = require('../routes/home');
 
 const url = 'https://truyenfull.vn';
 
@@ -24,6 +25,39 @@ function extractChapterNumber(chapterTitle) {
 
 
 class Source1 {
+    async srapeHotNovelsListByGenre(url) {
+        try {
+            // Gửi yêu cầu HTTP đến trang web
+            const { data } = await axios.get(url,{
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+    
+    
+            // Phân tích cú pháp HTML
+            const $ = cheerio.load(data);
+
+            const bookList = [];
+
+          // Select each book item and extract the necessary information
+          $('div.item').each((index, element) => {
+            const title = $(element).find('.title h3').text().trim();
+            const url = $(element).find('a').attr('href').trim();
+            const image = $(element).find('img').attr('src').trim();
+            const slug=getSlugFromUrl(url);
+
+            bookList.push({ title, url, image, slug});
+           });
+
+        return bookList;
+    
+           
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
     async srapeHotNovelsList() {
         try {
             // Gửi yêu cầu HTTP đến trang web
@@ -50,6 +84,59 @@ class Source1 {
     
             // In ra kết quả
             return truyenDetails
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    async scrapeNewNovelsByGenres(url) {
+        try {
+            // Gửi yêu cầu HTTP đến trang web với headers giả lập trình duyệt
+            const { data } = await axios.get(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+    
+            // Phân tích cú pháp HTML
+            const $ = cheerio.load(data);
+    
+    
+            // Lấy danh sách các truyện từ thẻ list-index
+            const truyenDetails = [];
+            $('.row[itemscope][itemtype="https://schema.org/Book"]').each((index, element)=> {
+                const title = $(element).find('h3[itemprop="name"] a').text().trim();
+                const url = $(element).find('h3[itemprop="name"] a').attr('href');
+                const genreElements = $(element).find('div.col-cat a[itemprop="genre"]');
+                const genres = genreElements.map((i, el) => $(el).text().trim()).get();
+                const genreUrls = genreElements.map((i, el) => $(el).attr('href')).get();
+
+                const latestChapter = $(element).find('div.col-chap a').text().trim();
+                const latestChapterUrl = $(element).find('div.col-chap a').attr('href');
+
+                const chapterNumber = extractChapterNumber(latestChapter);
+               
+
+                const updateTime = $(element).find('div.col-time').text().trim();
+                const slug=getSlugFromUrl(url)
+                const chapterSlug=slug+'/chuong-'+chapterNumber;
+                if (title && url){
+                    truyenDetails.push({ title,
+                        url,
+                        genres,
+                        genreUrls,
+                        latestChapter,
+                        latestChapterUrl,
+                        chapterSlug,
+                        updateTime,
+                        slug });
+                }
+                
+            });
+            
+    
+            // In ra kết quả
+            return truyenDetails;
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -227,6 +314,50 @@ class Source1 {
         }
     }
     
+    async scrapeGenres() {
+        try {
+            const { data } = await axios.get(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+            const $ = cheerio.load(data);
+            
+            const genres = [];
+            
+            // Select the genre list
+            $('.dropdown-menu.multi-column .row .col-md-4 ul.dropdown-menu li a').each((index, element) => {
+                const genre = $(element).text().trim();
+                const genreUrl = $(element).attr('href').trim();
+                genres.push({ genre, genreUrl });
+            });
+
+            const danhSachList = [];
+
+        // Selecting the appropriate list elements within the "Danh sách" dropdown
+        $('li:contains("Danh sách") .dropdown-menu li a').each((index, element) => {
+            const title = $(element).text().trim();
+            const link = $(element).attr('href').trim();
+            danhSachList.push({ title, url: link });
+        });
+        
+        const options = [];
+        $('#hot-select option').each((index, element) => {
+            const value = $(element).attr('value').trim();
+            const text = $(element).text().trim();
+            options.push({ value, text });
+        });
+    
+            
+        const result={genres, danhSachList, options}
+        return result;
+        } catch (error) {
+            console.error('Error scraping genres:', error);
+            return [];
+        }
+
+
+    }
 }
 
 module.exports = new Source1;

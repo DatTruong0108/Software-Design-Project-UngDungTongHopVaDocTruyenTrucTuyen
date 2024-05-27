@@ -26,20 +26,20 @@
             <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Danh sách</span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+           <ul id="genresList" class="dropdown-menu ">
+              {{#each topicsList}}
+                <li><a class="dropdown-item" href="{{this.url}}">{{this.title}}</a></li>
+              {{/each}}
             </ul>
           </li>
           <li class="nav-item dropdown" style="margin-left: 30px;">
             <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Thể loại</span>
             </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <ul id="genresList" class="dropdown-menu ">
+              {{#each genresList}}
+                <li><a class="dropdown-item" href="{{this.genreUrl}}">{{this.genre}}</a></li>
+              {{/each}}
             </ul>
           </li>
           <li class="nav-item dropdown" style="margin-left: 30px;">

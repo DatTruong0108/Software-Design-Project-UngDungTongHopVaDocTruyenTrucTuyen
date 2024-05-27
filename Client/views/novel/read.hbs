@@ -63,20 +63,20 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link select-chap" href="#" aria-label="Previous">
+                <a class="page-link select-chapter" href="{{currentNovel}}/chuong-{{extract currentChapter 1}}" aria-label="Previous">
                     <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i> Chương trước</span>
                 </a>
             </li>
             <li class="page-item">
-                <select class="form-select select-chapter" aria-label="Default select example">
-                    <option selected>Chương 1</option>
-                    <option value="1">Chương 1</option>
-                    <option value="2">Chương 2</option>
-                    <option value="3">Chương 3</option>
+                <select id="chapterSelect" class="form-select select-chapter" aria-label="Default select example">
+                    <option selected>Chương {{currentChapter}}</option>
+                    {{#each chapters}}
+                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}</option></a>
+                    {{/each}}
                 </select>
             </li>
             <li class="page-item">
-                <a class="page-link select-chap" href="#" aria-label="Next">
+                <a class="page-link select-chapter" href="{{currentNovel}}/chuong-{{sum currentChapter 1}}" aria-label="Next">
                     <span aria-hidden="true">Chương sau <i class="fa-solid fa-angles-right"></i></span>
                 </a>
             </li>
@@ -95,11 +95,11 @@
                 </a>
             </li>
             <li class="page-item">
-                <select class="form-select select-chapter" aria-label="Default select example">
-                    <option selected>Chương 1</option>
-                    <option value="1">Chương 1</option>
-                    <option value="2">Chương 2</option>
-                    <option value="3">Chương 3</option>
+                <select id="chapterSelect1" class="form-select select-chapter" aria-label="Default select example">
+                    <option selected>Chương {{currentChapter}}</option>
+                    {{#each chapters}}
+                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}</option></a>
+                    {{/each}}
                 </select>
             </li>
             <li class="page-item">
@@ -110,8 +110,30 @@
         </ul>
     </nav>
 </div>
-
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const chapterSelect = document.getElementById('chapterSelect');
+     const chapterSelect1 = document.getElementById('chapterSelect1');
+    
+    chapterSelect.addEventListener('change', function() {
+        const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
+        const url = selectedOption.getAttribute('data-href');
+        
+        if (url) {
+            window.location.href = url;
+        }
+    });
+
+    chapterSelect1.addEventListener('change', function() {
+        const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
+        const url = selectedOption.getAttribute('data-href');
+        
+        if (url) {
+            window.location.href = url;
+        }
+    });
+});
+
     /*Thay đổi màu nền*/
     var backgroundColorSelect = document.querySelector("#background-color-select");
     var backgroundDiv = document.querySelector("#background-div");
@@ -300,4 +322,3 @@
         applySelectedLineHeight(lineHeightSelect.value);
     }
 </script>
-
