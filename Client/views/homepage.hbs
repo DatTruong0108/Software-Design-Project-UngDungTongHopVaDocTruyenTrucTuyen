@@ -78,16 +78,13 @@
                         <h5 class="text-center">Truyện ĐANG ĐỌC</h5>
                     </div>
                 </li>
+                {{#each historyList}}
                 <li class="list-group-item d-flex justify-content-between">
-                    <span>Item 1</span>
+                    <span><a class="text-link" href="/{{this.slug}}">{{this.title}}</a></span>
                     <div class="separator"></div>
-                    <span>Item 2</span>
+                    <span><a class="text-link" href="/{{this.slug}}/chuong-{{this.chapterNumber}}">Chương {{this.chapterNumber}}</a></span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between">
-                    <span>Item 3</span>
-                    <div class="separator"></div>
-                    <span>Item 4</span>
-                </li>
+                {{/each}}
             </ul>
             <ul class="list-group text-center mt-4">
                 <li class="list-group-item">
