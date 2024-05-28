@@ -219,4 +219,29 @@
             });
         });
     });
+    document.addEventListener("DOMContentLoaded", function () {
+        /*Thay đổi màu nền*/
+        var backgroundColorSelect = document.querySelector("#background-color-select");
+        var backgroundDiv = document.querySelector("#background-div");
+
+        // Gán sự kiện onchange cho select element
+        backgroundColorSelect.addEventListener("change", function () {
+            var selectedBackgroundColor = backgroundColorSelect.value;
+            localStorage.setItem("selectedBackgroundColor", selectedBackgroundColor);
+            applySelectedBackgroundColor();
+        });
+
+        function applySelectedBackgroundColor() {
+            var storedBackgroundColor = localStorage.getItem("selectedBackgroundColor");
+            if (storedBackgroundColor) {
+                var bodyElement = document.querySelector("body");
+                bodyElement.classList.remove("bg-white", "bg-cream", "bg-peachpuff", "bg-gray");
+                bodyElement.classList.add(storedBackgroundColor);
+                backgroundColorSelect.value = storedBackgroundColor; // Cập nhật giá trị được chọn trên dropdown menu
+                backgroundDiv.style.backgroundColor = storedBackgroundColor === "bg-white" ? "#EFF8FE" : "white";
+            }
+        }
+
+        applySelectedBackgroundColor();
+    });
 </script>

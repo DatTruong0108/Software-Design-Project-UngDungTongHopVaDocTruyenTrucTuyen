@@ -48,8 +48,8 @@
             </a>
             <ul class="dropdown-menu custom-dropdown-menu" style="min-width: 350px;">
               <li class="d-flex justify-content: space-between; align-items-center">
-                <a class="dropdown-menu-text">Size chữ</a>
-                <select id="text-content-select"  class="form-select custom-select" aria-label="Default select example">
+                <a id="text-select1" class="dropdown-menu-text" style="display: none;">Size chữ</a>
+                <select id="text-content-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
                   <option value="size-16">16</option>
                   <option value="size-18">18</option>
                   <option value="size-20" selected>20</option>
@@ -67,8 +67,8 @@
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
-                <a class="dropdown-menu-text">Font chữ</a>
-                <select id="font-select" class="form-select custom-select" aria-label="Default select example">
+                <a id="text-select2" class="dropdown-menu-text" style="display: none;">Font chữ</a>
+                <select id="font-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
                   <option value="font-roboto" selected>Roboto</option>
                   <option value="font-timesnewroman">Times New Roman</option>
                   <option value="font-helvetica">Helvetica</option>
@@ -83,13 +83,12 @@
                   <option value="bg-cream">Màu kem</option>
                   <option value="bg-peachpuff">Màu hồng đào</option>
                   <option value="bg-gray">Màu xám nhạt</option>
-                  <option value="bg-dark">Màu tối</option>
                 </select>       
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
-                <a class="dropdown-menu-text">Màu chữ</a>
-                <select id="text-color-select" class="form-select custom-select" aria-label="Default select example">
+                <a id="text-select3" style="display: none;" class="dropdown-menu-text">Màu chữ</a>
+                <select id="text-color-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
                   <option value="text-color-black" selected>Đen</option>
                   <option value="text-color-red">Đỏ</option>
                   <option value="text-color-green">Xanh lá</option>
@@ -99,8 +98,8 @@
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
-                <a class="dropdown-menu-text">Độ dãn dòng</a>
-                <select id="line-height-select" class="form-select custom-select" aria-label="Default select example">
+                <a id="text-select4" style="display: none;" class="dropdown-menu-text">Độ dãn dòng</a>
+                <select id="line-height-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
                   <option value="line-height-1">1.0</option>
                   <option value="line-height-1-1-5" selected>1.15</option>
                   <option value="line-height-1-5">1.5</option>

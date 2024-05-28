@@ -132,6 +132,13 @@
             window.location.href = url;
         }
     });
+
+     const ids = ["text-select1", "text-select2", "text-select3", "text-select4", "text-content-select",
+      "font-select", "text-color-select", "line-height-select"];
+
+    ids.forEach(id => {
+      document.getElementById(id).removeAttribute("style");
+    });
 });
     document.addEventListener("DOMContentLoaded", function () {
         /*Thay đổi màu nền*/
@@ -149,7 +156,7 @@
             var storedBackgroundColor = localStorage.getItem("selectedBackgroundColor");
             if (storedBackgroundColor) {
                 var bodyElement = document.querySelector("body");
-                bodyElement.classList.remove("bg-white", "bg-cream", "bg-peachpuff", "bg-gray", "bg-dark");
+                bodyElement.classList.remove("bg-white", "bg-cream", "bg-peachpuff", "bg-gray");
                 bodyElement.classList.add(storedBackgroundColor);
                 backgroundColorSelect.value = storedBackgroundColor; // Cập nhật giá trị được chọn trên dropdown menu
                 backgroundDiv.style.backgroundColor = storedBackgroundColor === "bg-white" ? "#EFF8FE" : "white";
