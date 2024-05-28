@@ -443,3 +443,11 @@
 .line-height-3 {
     line-height: 3;
 }
+
+.cus-text {
+    color: white;
+}
+
+.cus-text:hover {
+    color:#000;
+}
