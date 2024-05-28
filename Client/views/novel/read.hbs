@@ -133,192 +133,122 @@
         }
     });
 });
+    document.addEventListener("DOMContentLoaded", function () {
+        /*Thay đổi màu nền*/
+        var backgroundColorSelect = document.querySelector("#background-color-select");
+        var backgroundDiv = document.querySelector("#background-div");
 
-    /*Thay đổi màu nền*/
-    var backgroundColorSelect = document.querySelector("#background-color-select");
-    var backgroundDiv = document.querySelector("#background-div");
+        // Gán sự kiện onchange cho select element
+        backgroundColorSelect.addEventListener("change", function () {
+            var selectedBackgroundColor = backgroundColorSelect.value;
+            localStorage.setItem("selectedBackgroundColor", selectedBackgroundColor);
+            applySelectedBackgroundColor();
+        });
 
-    // Gán sự kiện onchange cho select element
-    backgroundColorSelect.addEventListener("change", function () {
-        // Lấy giá trị màu nền được chọn
-        var selectedBackgroundColor = backgroundColorSelect.value;
-
-        // Lưu giá trị màu nền vào localStorage
-        localStorage.setItem("selectedBackgroundColor", selectedBackgroundColor);
-
-        // Áp dụng màu nền đã chọn
-        applySelectedBackgroundColor();
-    });
-
-    // Hàm áp dụng màu nền đã chọn
-    function applySelectedBackgroundColor() {
-        // Lấy giá trị màu nền đã lưu từ localStorage
-        var storedBackgroundColor = localStorage.getItem("selectedBackgroundColor");
-
-        // Nếu giá trị màu nền đã được lưu
-        if (storedBackgroundColor) {
-            // Lấy phần tử body
-            var bodyElement = document.querySelector("body");
-
-            // Xóa tất cả các lớp màu nền hiện tại
-            bodyElement.classList.remove("bg-white", "bg-cream", "bg-peachpuff", "bg-gray", "bg-dark");
-
-            // Thêm lớp màu nền mới từ giá trị đã lưu
-            bodyElement.classList.add(storedBackgroundColor);
-
-            // Cập nhật giá trị được chọn trên dropdown menu
-            backgroundColorSelect.value = storedBackgroundColor;
-
-            // Áp dụng màu nền đã chọn cho phần tử div
-            backgroundDiv.style.backgroundColor = storedBackgroundColor === "bg-white" ? "#EFF8FE" : "white";
+        function applySelectedBackgroundColor() {
+            var storedBackgroundColor = localStorage.getItem("selectedBackgroundColor");
+            if (storedBackgroundColor) {
+                var bodyElement = document.querySelector("body");
+                bodyElement.classList.remove("bg-white", "bg-cream", "bg-peachpuff", "bg-gray", "bg-dark");
+                bodyElement.classList.add(storedBackgroundColor);
+                backgroundColorSelect.value = storedBackgroundColor; // Cập nhật giá trị được chọn trên dropdown menu
+                backgroundDiv.style.backgroundColor = storedBackgroundColor === "bg-white" ? "#EFF8FE" : "white";
+            }
         }
-    }
 
-    // Áp dụng màu nền đã chọn khi trang được tải lại
-    applySelectedBackgroundColor();
+        applySelectedBackgroundColor();
 
+        /*Thay đổi cỡ chữ*/
+        var textContentSelect = document.querySelector("#text-content-select");
 
-    /*Thay đổi cỡ chữ*/
-    var textContentSelect = document.querySelector("#text-content-select");
+        textContentSelect.addEventListener("change", function () {
+            var selectedValue = textContentSelect.value;
+            localStorage.setItem("selectedTextSize", selectedValue);
+            applySelectedTextContent(selectedValue);
+        });
 
-    // Gán sự kiện onchange cho select element
-    textContentSelect.addEventListener("change", function () {
-        // Lấy giá trị lựa chọn
-        var selectedValue = textContentSelect.value;
+        function applySelectedTextContent(selectedValue) {
+            var textContentElement = document.querySelector("#text-content");
+            textContentElement.classList.remove("size-16", "size-18", "size-20", "size-22", "size-24", "size-26", "size-28", "size-30", "size-32", "size-34", "size-36", "size-38", "size-40");
+            textContentElement.classList.add(selectedValue);
+            textContentSelect.value = selectedValue; // Cập nhật giá trị được chọn trên dropdown menu
+        }
 
-        // Lưu giá trị lựa chọn vào localStorage
-        localStorage.setItem("selectedTextSize", selectedValue);
+        var storedTextSize = localStorage.getItem("selectedTextSize");
+        if (storedTextSize) {
+            applySelectedTextContent(storedTextSize);
+        } else {
+            applySelectedTextContent(textContentSelect.value);
+        }
 
-        // Áp dụng lựa chọn cho text-content
-        applySelectedTextContent(selectedValue);
+        /*Thay đổi font chữ*/
+        var fontSelect = document.querySelector("#font-select");
+
+        fontSelect.addEventListener("change", function () {
+            var selectedFont = fontSelect.value;
+            localStorage.setItem("selectedFont", selectedFont);
+            applySelectedFont(selectedFont);
+        });
+
+        function applySelectedFont(selectedFont) {
+            var textContentElement = document.querySelector("#text-content");
+            textContentElement.classList.remove("font-roboto", "font-timesnewroman", "font-helvetica", "font-arial");
+            textContentElement.classList.add(selectedFont);
+            fontSelect.value = selectedFont; // Cập nhật giá trị được chọn trên dropdown menu
+        }
+
+        var storedFont = localStorage.getItem("selectedFont");
+        if (storedFont) {
+            applySelectedFont(storedFont);
+        } else {
+            applySelectedFont(fontSelect.value);
+        }
+
+        /*Thay đổi màu chữ*/
+        var textColorSelect = document.querySelector("#text-color-select");
+
+        textColorSelect.addEventListener("change", function () {
+            var selectedColor = textColorSelect.value;
+            localStorage.setItem("selectedColor", selectedColor);
+            applySelectedTextColor(selectedColor);
+        });
+
+        function applySelectedTextColor(selectedColor) {
+            var textContentElement = document.querySelector("#text-content");
+            textContentElement.classList.remove("text-color-black", "text-color-red", "text-color-green", "text-color-blue", "text-color-orange");
+            textContentElement.classList.add(selectedColor);
+            textColorSelect.value = selectedColor; // Cập nhật giá trị được chọn trên dropdown menu
+        }
+
+        var storedColor = localStorage.getItem("selectedColor");
+        if (storedColor) {
+            applySelectedTextColor(storedColor);
+        } else {
+            applySelectedTextColor(textColorSelect.value);
+        }
+
+        /*Thay đổi độ giãn dòng*/
+        var lineHeightSelect = document.querySelector("#line-height-select");
+
+        lineHeightSelect.addEventListener("change", function () {
+            var selectedLineHeight = lineHeightSelect.value;
+            localStorage.setItem("selectedLineHeight", selectedLineHeight);
+            applySelectedLineHeight(selectedLineHeight);
+        });
+
+        function applySelectedLineHeight(selectedLineHeight) {
+            var textContentElement = document.querySelector("#text-content");
+            textContentElement.classList.remove("line-height-1", "line-height-1-1-5", "line-height-1-5", "line-height-2", "line-height-2-5", "line-height-3");
+            textContentElement.classList.add(selectedLineHeight);
+            lineHeightSelect.value = selectedLineHeight; // Cập nhật giá trị được chọn trên dropdown menu
+        }
+
+        var storedLineHeight = localStorage.getItem("selectedLineHeight");
+        if (storedLineHeight) {
+            applySelectedLineHeight(storedLineHeight);
+        } else {
+            applySelectedLineHeight(lineHeightSelect.value);
+        }
     });
 
-    // Hàm áp dụng lựa chọn text-content
-    function applySelectedTextContent(selectedValue) {
-        // Lấy phần tử text-content
-        var textContentElement = document.querySelector("#text-content");
-
-        // Xóa tất cả các lớp text-content hiện tại
-        textContentElement.classList.remove("size-16", "size-18", "size-20", "size-22", "size-24", "size-26", "size-28", "size-30", "size-32", "size-34", "size-36", "size-38", "size-40");
-
-        // Thêm lớp text-content mới từ giá trị đã chọn
-        textContentElement.classList.add(selectedValue);
-    }
-
-    // Áp dụng lựa chọn text-content khi trang được tải lại
-    var storedTextSize = localStorage.getItem("selectedTextSize");
-    if (storedTextSize) {
-        applySelectedTextContent(storedTextSize);
-    } else {
-        // Nếu chưa có giá trị được lưu, áp dụng giá trị mặc định
-        applySelectedTextContent(textContentSelect.value);
-    }
-
-    /*Thay đổi font chữ*/
-    var fontSelect = document.querySelector("#font-select");
-
-    // Gán sự kiện onchange cho select element
-    fontSelect.addEventListener("change", function () {
-        // Lấy giá trị lựa chọn
-        var selectedFont = fontSelect.value;
-
-        // Lưu giá trị lựa chọn vào localStorage
-        localStorage.setItem("selectedFont", selectedFont);
-
-        // Áp dụng lựa chọn cho font chữ
-        applySelectedFont(selectedFont);
-    });
-
-    // Hàm áp dụng lựa chọn font chữ
-    function applySelectedFont(selectedFont) {
-        // Lấy phần tử text-content
-        var textContentElement = document.querySelector("#text-content");
-
-        // Xóa tất cả các lớp font chữ hiện tại
-        textContentElement.classList.remove("font-roboto", "font-timesnewroman", "font-helvetica", "font-arial");
-
-        // Thêm lớp font chữ mới từ giá trị đã chọn
-        textContentElement.classList.add(selectedFont);
-    }
-
-    // Áp dụng lựa chọn font chữ khi trang được tải lại
-    var storedFont = localStorage.getItem("selectedFont");
-    if (storedFont) {
-        applySelectedFont(storedFont);
-    } else {
-        // Nếu chưa có giá trị được lưu, áp dụng giá trị mặc định
-        applySelectedFont(fontSelect.value);
-    }
-
-    /* Thay đổi màu chữ*/
-    var textColorSelect = document.querySelector("#text-color-select");
-
-    // Gán sự kiện onchange cho select element
-    textColorSelect.addEventListener("change", function () {
-        // Lấy giá trị lựa chọn
-        var selectedColor = textColorSelect.value;
-
-        // Lưu giá trị lựa chọn vào localStorage
-        localStorage.setItem("selectedColor", selectedColor);
-
-        // Áp dụng lựa chọn cho màu chữ
-        applySelectedTextColor(selectedColor);
-    });
-
-    // Hàm áp dụng lựa chọn màu chữ
-    function applySelectedTextColor(selectedColor) {
-        // Lấy phần tử text-content
-        var textContentElement = document.querySelector("#text-content");
-
-        // Xóa tất cả các lớp màu chữ hiện tại
-        textContentElement.classList.remove("text-color-black", "text-color-red", "text-color-green", "text-color-blue", "text-color-orange");
-
-        // Thêm lớp màu chữ mới từ giá trị đã chọn
-        textContentElement.classList.add(selectedColor);
-    }
-
-    // Áp dụng lựa chọn màu chữ khi trang được tải lại
-    var storedColor = localStorage.getItem("selectedColor");
-    if (storedColor) {
-        applySelectedTextColor(storedColor);
-    } else {
-        // Nếu chưa có giá trị được lưu, áp dụng giá trị mặc định
-        applySelectedTextColor(textColorSelect.value);
-    }
-
-    /*Thay đổi độ giãn dòng*/
-    var lineHeightSelect = document.querySelector("#line-height-select");
-
-    // Gán sự kiện onchange cho select element
-    lineHeightSelect.addEventListener("change", function () {
-        // Lấy giá trị lựa chọn
-        var selectedLineHeight = lineHeightSelect.value;
-
-        // Lưu giá trị lựa chọn vào localStorage
-        localStorage.setItem("selectedLineHeight", selectedLineHeight);
-
-        // Áp dụng lựa chọn cho độ giãn dòng
-        applySelectedLineHeight(selectedLineHeight);
-    });
-
-    // Hàm áp dụng lựa chọn độ giãn dòng
-    function applySelectedLineHeight(selectedLineHeight) {
-        // Lấy phần tử text-content
-        var textContentElement = document.querySelector("#text-content");
-
-        // Xóa tất cả các lớp độ giãn dòng hiện tại
-        textContentElement.classList.remove("line-height-1", "line-height-1-1-5", "line-height-1-5", "line-height-2", "line-height-2-5", "line-height-3");
-
-        // Thêm lớp độ giãn dòng mới từ giá trị đã chọn
-        textContentElement.classList.add(selectedLineHeight);
-    }
-
-    // Áp dụng lựa chọn độ giãn dòng khi trang được tải lại
-    var storedLineHeight = localStorage.getItem("selectedLineHeight");
-    if (storedLineHeight) {
-        applySelectedLineHeight(storedLineHeight);
-    } else {
-        // Nếu chưa có giá trị được lưu, áp dụng giá trị mặc định
-        applySelectedLineHeight(lineHeightSelect.value);
-    }
 </script>
