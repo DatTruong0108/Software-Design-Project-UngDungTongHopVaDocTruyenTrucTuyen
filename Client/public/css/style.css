@@ -459,3 +459,12 @@
 .text-black {
     color: black;
 }
+
+.list-group-item span:first-child {
+    flex: 0 0 60%; /* Chia 80% độ rộng cho phần tử bên trái */
+}
+
+.list-group-item span:last-child {
+    flex: 0 0 40%; /* Chia 20% độ rộng cho phần tử bên phải */
+}
+
