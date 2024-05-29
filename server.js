@@ -60,7 +60,12 @@ app.engine(
             convertToHtml: Handlebars.helpers.convertToHtml,
             splitArray: Handlebars.helpers.splitArray,
             sum: (a, b) => Number(a) + Number(b),
-
+            ifEqual: function (a,b, opts) {
+                if (a.toString()==b.toString()) {
+                  return opts.fn(this);
+                }
+                return opts.inverse(this);
+            },
         }
     })
 );

@@ -276,7 +276,7 @@ class Source1 {
                 },
                 description,
                 chapters,
-                slug
+                slug:slug
             };
         } catch (error) {
             console.error('Error fetching novel info:', error);

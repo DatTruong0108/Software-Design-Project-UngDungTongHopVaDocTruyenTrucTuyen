@@ -6,10 +6,14 @@
     <div class="row">
       {{!-- col-md-5 d-flex align-items-center justify-content-center --}}
       <div class="col-md-5 d-flex flex-column align-items-center">
-        <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid novel-img">
+        <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid novel-img"> 
         <div class="d-flex justify-content-around w-50 mt-3">
-          <a href="#" style="background: #EB455F; color: white;" class="btn mx-2">Đọc tiếp</a>
-          <a href="#" style="background: #EB455F; color: white;" class="btn mx-2">Đọc từ đầu</a>
+          {{#ifEqual currentChapter -1}}
+               <a href="" style="background: #696969; color: white; pointer-events: none;" class="btn mx-2">Đọc tiếp</a>
+          {{else}}
+            <a href="/{{novel.slug}}/chuong-{{currentChapter}}" style="background: #EB455F; color: white; " class="btn mx-2">Đọc tiếp</a>
+          {{/ifEqual}}
+          <a href="/{{novel.slug}}/chuong-1" style="background: #EB455F; color: white;" class="btn mx-2">Đọc từ đầu</a>
         </div>
       </div>
       <div class="col-md-7 product-info">
@@ -69,7 +73,7 @@
           <a class="page-link"><i class="fa-solid fa-angles-left"></i></a>
         </li>
         <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active" aria-current="page">
+        <li class="page-item" aria-current="page">
           <a class="page-link" href="#">2</a>
         </li>
         <li class="page-item"><a class="page-link" href="#">3</a></li>

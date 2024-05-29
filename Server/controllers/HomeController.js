@@ -27,9 +27,20 @@ class HomeController {
 
     async novelDetail(req, res, next) {
         const slug=req.params.slug;
-        
         const novelDetail=await Source1.scrapeNovelInfo(slug);
-        res.render("novelDetail",{novel:novelDetail})
+
+        let currentChapter=-1
+        const novelName='/'+novelDetail.slug;
+        if (req.cookies.historyList) {
+            const historyList = JSON.parse(req.cookies.historyList);
+            for (const item of historyList) {
+                if (item.name === novelName) {
+                    currentChapter= item.chapterNumber;
+                }
+            }
+        }
+       
+        res.render("novelDetail",{novel:novelDetail, currentChapter})
     }
 
     async solve(req,res,next){
