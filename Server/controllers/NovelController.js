@@ -8,6 +8,22 @@ function extractChapterNumber(chapterTitle) {
 }
 
 class NovelController {
+    async genre(req, res, next) {
+        const slug=req.params.name;
+        const navbarList=await Source1.scrapeGenres();
+        const novelList=await Source1.scrapeNovelByGenre("genre",slug)
+
+        res.render("novel/viewByGenre",{genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList})
+    }
+
+    async topic(req, res, next) {
+        const slug=req.params.name;
+        const navbarList=await Source1.scrapeGenres();
+        const novelList=await Source1.scrapeNovelByGenre("topic",slug)
+
+        res.render("novel/viewByGenre",{genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList})
+    }
+    
     async read(req, res, next) {
         const name=req.baseUrl;
         const chapter=req.params.chapter;
@@ -15,8 +31,7 @@ class NovelController {
         const chapterNumber=extractChapterNumber(chapter)
         
 
-        const novelDetail=await Source1.scrapeNovelInfo(name.slice(1));   
-        console.log(novelDetail)  
+        const novelDetail=await Source1.scrapeNovelInfo(name.slice(1));    
         const content=await Source1.scrapeChapterData(chapterSlug);
 
         let historyList = [];

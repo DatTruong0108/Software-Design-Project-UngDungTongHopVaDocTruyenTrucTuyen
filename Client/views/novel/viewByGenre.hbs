@@ -1,0 +1,17 @@
+ <div class="container">
+        <h2 class="my-4">Danh sách truyện</h2>
+        <div class="row" id="novel-list">
+            {{#each novelList}}
+            <div class="col-md-2 novel-card">
+            <div class="card">
+                        <img src="{{this.image}}" class="card-img-top" alt="{{this.title}}">
+                        <div class="novel-info">
+                            <h5 class="novel-title"><a href="/{{this.slug}}">{{this.title}}</a></h5>
+                            <p class="novel-author">Tác giả: {{this.author}}</p>
+                            <p class="novel-chapter">Chương mới nhất: {{this.chapter}}</p>
+                        </div>
+            </div>
+           </div>
+           {{/each}}
+        </div>
+    </div>

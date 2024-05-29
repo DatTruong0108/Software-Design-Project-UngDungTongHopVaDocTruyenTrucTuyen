@@ -17,6 +17,16 @@ function getSlugFromUrl(url) {
    
 }
 
+function getGenreSlugFromUrl(url) {
+    if (url){
+        const urlObj = new URL(url);
+        const pathSegments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        return pathSegments[1];
+    }
+    else return url
+   
+}
+
 function extractChapterNumber(chapterTitle) {
     const regex = /Chương\s+(\d+)/i;
     const match = chapterTitle.match(regex);
@@ -329,7 +339,8 @@ class Source1 {
             $('.dropdown-menu.multi-column .row .col-md-4 ul.dropdown-menu li a').each((index, element) => {
                 const genre = $(element).text().trim();
                 const genreUrl = $(element).attr('href').trim();
-                genres.push({ genre, genreUrl });
+                const slug=getGenreSlugFromUrl(genreUrl)
+                genres.push({ genre, genreUrl, slug});
             });
 
             const danhSachList = [];
@@ -338,7 +349,8 @@ class Source1 {
         $('li:contains("Danh sách") .dropdown-menu li a').each((index, element) => {
             const title = $(element).text().trim();
             const link = $(element).attr('href').trim();
-            danhSachList.push({ title, url: link });
+            const slug=getGenreSlugFromUrl(link)
+            danhSachList.push({ title, url: link,slug });
         });
         
         const options = [];
@@ -358,6 +370,61 @@ class Source1 {
 
 
     }
+
+    async scrapeNovelByGenre(type,slug) {
+        let baseUrl
+        if (type=='genre'){
+            
+            baseUrl=url+'/the-loai/'+slug;
+        }
+        else if (type=="topic"){
+            baseUrl=url+'/danh-sach/'+slug
+        }
+        
+    
+        try {
+            const { data } = await axios.get(baseUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+            const $ = cheerio.load(data);
+    
+            const novels = [];
+    
+            $('.list .row').each((index, element) => {
+                const titleElement = $(element).find('.truyen-title a');
+                const title = titleElement.attr('title');
+                const link = titleElement.attr('href');
+                const image = $(element).find('[data-image]').attr('data-image');
+
+                if (title) {
+                    const author = $(element).find('.author').text().trim();
+                    const chapter = $(element).find('.text-info a').text().replace('Chương ', '').trim();
+                    const slug =getSlugFromUrl(link)
+                
+                const novel = {
+                    title,
+                    author,
+                    link,
+                    chapter,
+                    image,
+                    slug
+                };
+    
+                novels.push(novel);
+                }
+    
+                
+            });
+    
+            return novels;
+        } catch (error) {
+            console.error('Error scraping data:', error);
+            return [];
+        }
+    }
+    
 }
 
 module.exports = new Source1;

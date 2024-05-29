@@ -468,3 +468,23 @@
     flex: 0 0 40%; /* Chia 20% độ rộng cho phần tử bên phải */
 }
 
+.novel-card {
+    margin-bottom: 20px;
+}
+.novel-card img {
+    align-self: center;
+    width: 50%;
+    height: auto;
+}
+.novel-info {
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+.novel-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+.novel-author, .novel-chapter {
+    font-size: 1rem;
+}
+

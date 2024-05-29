@@ -21,6 +21,7 @@ class HomeController {
         };
         }
 
+
         res.render("homepage",{hotNovels: hotNovelsList,newNovels:newNovelsList, genresList: navbarList.genres,hotSelect:navbarList.options, topicsList: navbarList.danhSachList, historyList})
     }
 
