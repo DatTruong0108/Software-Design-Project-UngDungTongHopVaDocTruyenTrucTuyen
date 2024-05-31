@@ -1,26 +1,7 @@
- <div class="container" id="mainContainer">
-        <h2 class="my-4">Danh sách truyện</h2>
-        <div class="row" id="novel-list">
-            {{#each novelList}}
-            <div class="col-md-2 novel-card">
-            <div class="card">
-                        <img src="{{this.image}}" class="card-img-top" alt="{{this.title}}">
-                        <div class="novel-info">
-                            <h5 class="novel-title"><a href="/{{this.slug}}">{{this.title}}</a></h5>
-                            <p class="novel-author">Tác giả: {{this.author}}</p>
-                            <p class="novel-chapter">Chương mới nhất: {{this.chapter}}</p>
-                        </div>
-            </div>
-           </div>
-           {{/each}}
-        </div>
-    </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
+$(document).ready(function() {
     $('#searchForm').on('submit', function(e){
         e.preventDefault();
-        var container = $('#novel-list');
+        var container = $('#mainContainer');
         container.empty();  // Clear the current content
         var searchInput = $('#searchInput').val();
         var url = 'http://localhost:3000/search?name=' + searchInput;
@@ -31,16 +12,23 @@
             method: 'POST',
             success: function(data) {
                 var novelsResult = data.searchResult;  // Adjust according to the structure of the response
+                console.log(novelsResult)
             
                 if(novelsResult.length==0){
                     var novelHtml = `
+                    <h2 class="my-4">Danh sách truyện</h2>
+                            <div class="row" id="novel-list">
                                 No result or Search string is too short 
+                            </div>
                     `;
                     container.append(novelHtml);
                 }
                 else{
+                    var novelHtml = `
+                    <h2 class="my-4">Danh sách truyện</h2>
+    <div class="row" id="novel-list">`
                     novelsResult.forEach(function(novel) {
-                        var novelHtml = `
+                        novelHtml += `
                             <div class="col-md-2 novel-card">
         <div class="card">
                     <img src="${novel.image}" class="card-img-top" alt="${novel.title}">
@@ -52,8 +40,9 @@
         </div>
     </div>
                         `;
-                        container.append(novelHtml);
                     });
+                    novelHtml +=  `</div>`;
+                    container.append(novelHtml);
                 }
                 
             },
@@ -63,4 +52,3 @@
         });
     });
 });
-    </script>
