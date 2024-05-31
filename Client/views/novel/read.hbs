@@ -63,7 +63,8 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{extract currentChapter 1}}" aria-label="Previous">
+                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{extract currentChapter 1}}"
+                    aria-label="Previous">
                     <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i> Chương trước</span>
                 </a>
             </li>
@@ -71,19 +72,21 @@
                 <select id="chapterSelect" class="form-select select-chapter" aria-label="Default select example">
                     <option selected>Chương {{currentChapter}}</option>
                     {{#each chapters}}
-                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}</option></a>
+                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}
+                    </option></a>
                     {{/each}}
                 </select>
             </li>
             <li class="page-item">
-                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{sum currentChapter 1}}" aria-label="Next">
+                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{sum currentChapter 1}}"
+                    aria-label="Next">
                     <span aria-hidden="true">Chương sau <i class="fa-solid fa-angles-right"></i></span>
                 </a>
             </li>
         </ul>
     </nav>
 
-    <div  id="text-content" class="text-content text-justify mb-4">
+    <div id="text-content" class="text-content text-justify mb-4">
         {{{convertToHtml content.chapterContent}}}
     </div>
 
@@ -98,7 +101,8 @@
                 <select id="chapterSelect1" class="form-select select-chapter" aria-label="Default select example">
                     <option selected>Chương {{currentChapter}}</option>
                     {{#each chapters}}
-                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}</option></a>
+                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}
+                    </option></a>
                     {{/each}}
                 </select>
             </li>
@@ -109,37 +113,42 @@
             </li>
         </ul>
     </nav>
+
+    {{!-- back to top button --}}
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top-btn align-items-center justify-content-center">
+        <i class="fa-solid fa-arrow-up"></i>
+    </a>
 </div>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const chapterSelect = document.getElementById('chapterSelect');
-     const chapterSelect1 = document.getElementById('chapterSelect1');
-    
-    chapterSelect.addEventListener('change', function() {
-        const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
-        const url = selectedOption.getAttribute('data-href');
-        
-        if (url) {
-            window.location.href = url;
-        }
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const chapterSelect = document.getElementById('chapterSelect');
+        const chapterSelect1 = document.getElementById('chapterSelect1');
 
-    chapterSelect1.addEventListener('change', function() {
-        const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
-        const url = selectedOption.getAttribute('data-href');
-        
-        if (url) {
-            window.location.href = url;
-        }
-    });
+        chapterSelect.addEventListener('change', function () {
+            const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
+            const url = selectedOption.getAttribute('data-href');
 
-     const ids = ["text-select1", "text-select2", "text-select3", "text-select4", "text-content-select",
-      "font-select", "text-color-select", "line-height-select"];
+            if (url) {
+                window.location.href = url;
+            }
+        });
 
-    ids.forEach(id => {
-      document.getElementById(id).removeAttribute("style");
+        chapterSelect1.addEventListener('change', function () {
+            const selectedOption = chapterSelect.options[chapterSelect.selectedIndex];
+            const url = selectedOption.getAttribute('data-href');
+
+            if (url) {
+                window.location.href = url;
+            }
+        });
+
+        const ids = ["text-select1", "text-select2", "text-select3", "text-select4", "text-content-select",
+            "font-select", "text-color-select", "line-height-select"];
+
+        ids.forEach(id => {
+            document.getElementById(id).removeAttribute("style");
+        });
     });
-});
     document.addEventListener("DOMContentLoaded", function () {
         /*Thay đổi màu nền*/
         var backgroundColorSelect = document.querySelector("#background-color-select");
@@ -258,6 +267,24 @@
         }
     });
 
+    // back to top button function
+    // Khi người dùng cuộn xuống 20px từ đầu trang, hiện nút
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        const backToTopBtn = document.getElementsByClassName("back-to-top-btn")[0];
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            backToTopBtn.style.display = "block";
+        } else {
+            backToTopBtn.style.display = "none";
+        }
+    }
+
+    // Khi người dùng nhấn vào nút, cuộn lên đầu trang
+    document.getElementsByClassName("back-to-top-btn")[0].addEventListener('click', function () {
+        document.body.scrollTop = 0; // Cho Safari
+        document.documentElement.scrollTop = 0; // Cho Chrome, Firefox, IE và Opera
+    });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
