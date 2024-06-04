@@ -33,7 +33,8 @@ class NovelController {
 
         const novelDetail=await Source1.scrapeNovelInfo(name.slice(1));    
         const content=await Source1.scrapeChapterData(chapterSlug);
-
+        console.log(chapterSlug);
+        //console.log(content);
         let historyList = [];
 
         if (req.cookies.historyList) {

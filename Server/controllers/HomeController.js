@@ -28,7 +28,6 @@ class HomeController {
     async novelDetail(req, res, next) {
         const slug=req.params.slug;
         const novelDetail=await Source1.scrapeNovelInfo(slug);
-
         let currentChapter=-1
         const novelName='/'+novelDetail.slug;
         if (req.cookies.historyList) {
