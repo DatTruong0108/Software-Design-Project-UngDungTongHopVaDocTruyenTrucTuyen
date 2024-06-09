@@ -382,6 +382,9 @@ class Source1 {
         else if (type=="topic"){
             baseUrl=url+'/danh-sach/'+slug
         }
+        else if (type=="search"){
+            baseUrl=url+'/tim-kiem/'+slug;
+        }
         
     
         try {
