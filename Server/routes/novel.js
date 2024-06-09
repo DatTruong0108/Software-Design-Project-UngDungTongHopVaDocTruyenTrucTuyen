@@ -6,6 +6,7 @@ const fs = require('fs');
 
 const NovelController=require('../controllers/NovelController');
 
+
 route.get('/:chapter',NovelController.read);
 
 module.exports=route;
