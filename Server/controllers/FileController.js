@@ -4,7 +4,7 @@ const Source1 = require('../config/source1');
 const PDF = require('pdf-lib');
 const FILESAVER = require('file-saver');
 const fontkit = require('fontkit');
-
+const { exec } = require('child_process');
 function calculateLinesPerPage(pageHeight, margin, lineSpacing, fontSize) {
   const availableHeight = pageHeight - 2 * margin;
   const linesPerPage = Math.floor(availableHeight / (fontSize + lineSpacing));
@@ -262,7 +262,7 @@ const ebookConverter = require('node-ebook-converter');
 const { promisify } = require('util');
 const unlinkAsync = promisify(fs.unlink);
 const fsSync = require('fs').promises;
-
+const ebookConvertPath = `"C:\\Program Files\\Calibre2\\ebook-convert.exe"`;
 const { Buffer } = require('buffer');
 
 const fsExtra = require('fs-extra');
@@ -346,6 +346,89 @@ async function createEpub(name, chapter) {
 }
 
 
+const convertEpubToPrc = async (epubBuffer) => {
+  return new Promise((resolve, reject) => {
+      tmp.file({ postfix: '.epub' }, async (err, tempEpubPath, fd, epubCleanupCallback) => {
+          if (err) {
+              return reject(err);
+          }
+
+          try {
+              // Write EPUB buffer to temp file
+              await fsExtra.writeFile(tempEpubPath, epubBuffer);
+
+              tmp.file({ postfix: '.mobi' }, (err, tempPrcPath, fd, prcCleanupCallback) => {
+                  if (err) {
+                      epubCleanupCallback();
+                      return reject(err);
+                  }
+
+                  // Convert EPUB to PRC using ebook-convert
+                  exec(`${ebookConvertPath} "${tempEpubPath}" "${tempPrcPath}"`, async (error, stdout, stderr) => {
+                      if (error) {
+                          epubCleanupCallback();
+                          prcCleanupCallback();
+                          return reject(error);
+                      }
+
+                      try {
+                          // Read PRC buffer from temp file
+                          const prcBuffer = await fsExtra.readFile(tempPrcPath);
+                          epubCleanupCallback();
+                          prcCleanupCallback();
+                          resolve(prcBuffer);
+                      } catch (readError) {
+                          epubCleanupCallback();
+                          prcCleanupCallback();
+                          reject(readError);
+                      }
+                  });
+              });
+          } catch (writeError) {
+              epubCleanupCallback();
+              reject(writeError);
+          }
+      });
+  });
+};
+
+async function createEpubAndConvertToPrc(name, chapter) {
+  const epubOptions = await getEpubOption(name, chapter);
+
+  try {
+      const epubBuffer = await generateEpubBuffer(epubOptions);
+      //console.log('EPUB Buffer:', epubBuffer);
+
+      const prcBuffer = await convertEpubToPrc(epubBuffer);
+      //console.log('PRC Buffer:', prcBuffer);
+
+      return prcBuffer;
+  } catch (err) {
+      console.error('Error generating or converting EPUB:', err);
+      throw err;
+  }
+}
+
+// async function createPrc(name, chapter) {
+//   const epubBuffer = await createEpub(name, chapter);
+//   const epubPath = `${name}.epub`;
+//   fs.writeFileSync(epubPath, epubBuffer);
+
+//   const prcPath = `${name}.mobi`;
+//   await ebookConverter.convert({
+//     input: epubPath,
+//     output: prcPath,
+//   });
+
+//   const prcBuffer = fs.readFileSync(prcPath);
+//   await unlinkAsync(epubPath); // Clean up the temporary file
+//   await unlinkAsync(prcPath);  // Clean up the temporary file
+
+//   return prcBuffer;
+// }
+
+
+
 class FileController {
     async fileExport(req, res, next) {
       const chapterExport = req.body.chapterExport;
@@ -374,7 +457,7 @@ class FileController {
       } else if (fileType === 'prc') {
         //const prcPath = `${filename}.mobi`;
         //await createPrc(currenNovel, chapterExport);
-        fileBuffer = await createPrc(currenNovel, chapterExport);
+        fileBuffer = await createEpubAndConvertToPrc(currenNovel, chapterExport);
         contentType = 'application/x-mobipocket-ebook';
         fileExtension = 'mobi';
         //fs.unlinkSync(prcPath); // Clean up the temporary file
