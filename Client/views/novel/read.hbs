@@ -321,7 +321,15 @@
                 const a = document.createElement('a');
                 a.style.display = 'none';
                 a.href = url;
-                a.download = `${filename}.pdf`;
+                var fileExtension;
+                if (exportType === 'pdf') {
+                    fileExtension = 'pdf';
+                } else if (exportType === 'epub') {
+                    fileExtension = 'epub';
+                } else if (exportType === 'prc') {
+                    fileExtension = 'mobi';
+                } 
+                a.download = `${filename}.${fileExtension}`;
                 document.body.appendChild(a);
                 a.click();
                 window.URL.revokeObjectURL(url);

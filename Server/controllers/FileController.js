@@ -257,25 +257,134 @@ async function createPdf(name, chapter) {
   // FILESAVER.saveAs(blob, 'example.pdf');
   return pdfBytes;
 }
+const EPUB = require('epub-gen');
+const ebookConverter = require('node-ebook-converter');
+const { promisify } = require('util');
+const unlinkAsync = promisify(fs.unlink);
+const fsSync = require('fs').promises;
+
+const { Buffer } = require('buffer');
+
+const fsExtra = require('fs-extra');
+const tmp = require('tmp');
+
+const generateEpubBuffer = async (options) => {
+    return new Promise((resolve, reject) => {
+        // Tạo một file tạm
+        tmp.file({ postfix: '.epub' }, async (err, tempPath, fd, cleanupCallback) => {
+            if (err) {
+                return reject(err);
+            }
+
+            try {
+                // Tạo EPUB và ghi vào file tạm
+                await new EPUB(options, tempPath).promise;
+
+                // Đọc nội dung file vào buffer
+                const buffer = await fsExtra.readFile(tempPath);
+                
+                // Cleanup file tạm và resolve buffer
+                cleanupCallback();
+                resolve(buffer);
+            } catch (error) {
+                // Cleanup file tạm và reject error
+                cleanupCallback();
+                reject(error);
+            }
+        });
+    });
+};
+
+async function getEpubOption(name,chapter){
+  const nameSlug = name.slice(1);
+  const novelDetail = await Source1.scrapeNovelInfo(nameSlug);
+  let description = novelDetail.description;
+  description = description.replace(/&nbsp;/g, ' ');
+  description = description.replace(/<br>/g, '\n');
+  const epubOptions = {
+    title: novelDetail.title,
+    author: novelDetail.author,
+    content: [],
+  };
+  epubOptions.content.push({
+    title: "Lời Nói Đầu",
+    author: "Tác giả: " + novelDetail.author,
+    data: description,
+  });
+  if (chapter === 'All') {
+    for (const chap of novelDetail.chapters) {
+      const chapterContent = await Source1.scrapeChapterData('/' + chap.chapterSlug);
+      //console.log(chap.chapterSlug);
+      epubOptions.content.push({
+        title: chapterContent.chapterTitle,
+        data: chapterContent.chapterContent.replace(/\n/g, '<br>'),
+      });
+    }
+  } else {
+    const exportChapterSlug = name + '/' + chapter;
+    const chapterContent = await Source1.scrapeChapterData(exportChapterSlug);
+    epubOptions.content.push({
+      title: chapterContent.chapterTitle,
+      data: chapterContent.chapterContent.replace(/\n/g, '<br>'),
+    });
+  }
+  return epubOptions;
+}
+
+async function createEpub(name, chapter) {
+  const epubOptions = await getEpubOption(name, chapter);
+  //console.log(epubOptions);
+  try {
+    const buffer = await generateEpubBuffer(epubOptions);
+    return buffer;
+  } catch (err) {
+    console.error('Error generating EPUB:', err);
+    throw err; // Re-throw the error to handle it in the caller function if needed
+  }
+}
+
 
 class FileController {
     async fileExport(req, res, next) {
-        const chapterExport = req.body.chapterExport;
-        const fileType = req.body.exportType;
-        const currenNovel = req.body.currNovel;
-        //console.log(chapterExport);
-        //console.log(fileType);
-        //console.log(currenNovel)
-        var pdfBytes;
-        if(fileType == 'pdf')
-          pdfBytes = await createPdf(currenNovel, chapterExport);
-        const filenameSlug = currenNovel.slice(1) + '-' +chapterExport;
-        const filename = filenameSlug.replace(/-/g, '_');
-        console.log(filename);
-        res.setHeader('Content-Disposition', `attachment; filename=${filename}.pdf`);
-        res.setHeader('Content-Type', 'application/pdf');
-        res.send(Buffer.from(pdfBytes));
+      const chapterExport = req.body.chapterExport;
+      const fileType = req.body.exportType;
+      const currenNovel = req.body.currNovel;
+      
+      const filenameSlug = currenNovel.slice(1) + '-' + chapterExport;
+      const filename = filenameSlug.replace(/-/g, '_');
+      
+      let fileBuffer;
+      let contentType;
+      let fileExtension;
+    
+      if (fileType === 'pdf') {
+        const pdfBytes = await createPdf(currenNovel, chapterExport);
+        fileBuffer = Buffer.from(pdfBytes);
+        contentType = 'application/pdf';
+        fileExtension = 'pdf';
+      } else if (fileType === 'epub') {
+        //const epubPath = `${filename}.epub`;
+        //await createEpub(currenNovel, chapterExport);
+        fileBuffer = await createEpub(currenNovel, chapterExport);
+        contentType = 'application/epub+zip';
+        fileExtension = 'epub';
+        //fs.unlinkSync(epubPath); // Clean up the temporary file
+      } else if (fileType === 'prc') {
+        //const prcPath = `${filename}.mobi`;
+        //await createPrc(currenNovel, chapterExport);
+        fileBuffer = await createPrc(currenNovel, chapterExport);
+        contentType = 'application/x-mobipocket-ebook';
+        fileExtension = 'mobi';
+        //fs.unlinkSync(prcPath); // Clean up the temporary file
+      } else {
+        return res.status(400).send('Invalid file type requested');
+      }
+    
+      res.setHeader('Content-Disposition', `attachment; filename=${filename}.${fileExtension}`);
+      res.setHeader('Content-Type', contentType);
+      res.send(fileBuffer);
     }
+    
 }
 
 
