@@ -299,16 +299,18 @@ async function getEpubOption(name,chapter){
   const nameSlug = name.slice(1);
   const novelDetail = await Source1.scrapeNovelInfo(nameSlug);
   let description = novelDetail.description;
-  description = description.replace(/&nbsp;/g, ' ');
-  description = description.replace(/<br>/g, '\n');
+  //description = description.replace(/&nbsp;/g, ' ');
+  //description = description.replace(/<br>/g, '\n');
   const epubOptions = {
     title: novelDetail.title,
     author: novelDetail.author,
+    cover: novelDetail.image,
     content: [],
   };
   epubOptions.content.push({
     title: "Lời Nói Đầu",
     author: "Tác giả: " + novelDetail.author,
+    cover: novelDetail.image,
     data: description,
   });
   if (chapter === 'All') {
