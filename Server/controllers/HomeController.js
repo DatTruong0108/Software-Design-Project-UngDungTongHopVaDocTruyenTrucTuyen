@@ -38,6 +38,9 @@ class HomeController {
                 }
             }
         }
+
+        // const result=await Source1.scrapeNovelInfo('ki-tai-giao-chu/trang-2')
+        // console.log(result.chapters)
        
         res.render("novelDetail",{novel:novelDetail, currentChapter})
     }
@@ -45,8 +48,11 @@ class HomeController {
     async solve(req,res,next){
         const type=req.query.type;
         const id=req.query.id;
+        const  name=req.query.name;
+        const page=req.query.page;
 
         const url=`https://truyenfull.vn/ajax.php?type=${type}&id=${id}`
+
 
         var result
 
@@ -56,9 +62,13 @@ class HomeController {
         else if (type=="new_select"){ 
             result=await Source1.scrapeNewNovelsByGenres(url)
         }
+        else if (type=="page_select"){
+            const temp=name+"/trang-"+page;
+            result=await Source1.scrapeNovelInfo(temp)
+        }
         
 
-        res.status(200).json({ success: true, hotNovels: result, newNovels: result});
+        res.status(200).json({ success: true, hotNovels: result, newNovels: result, chapters:result.chapters});
     }
     async searchPost(req, res, next){
         const name = req.query.name;

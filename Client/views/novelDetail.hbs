@@ -42,10 +42,10 @@
   <div class="title-list mt-4">
     <h3>DANH SÁCH CHƯƠNG</h3>
     <hr>
-    <div class="chapter-list">
-      <div class="row">
+    <div >
+      <div id="chapter-list" class="row">
         <div class="col-xs-12 col-sm-6">
-          <ul>
+          <ul id="chapter-list-left">
             {{#each (splitArray novel.chapters 2 0)}}
             <li>
               <a class="text-link" href="/{{this.chapterSlug}}">{{this.chapterTitle}}</a>
@@ -54,7 +54,7 @@
           </ul>
         </div>
         <div class="col-xs-12 col-sm-6">
-          <ul>
+          <ul id="chapter-list-right">
             {{#each (splitArray novel.chapters 2 1)}}
             <li>
               <a class="text-link" href="/{{this.chapterSlug}}/">{{this.chapterTitle}}</a>
@@ -69,24 +69,28 @@
   <div class="container mt-4 mb-4">
     <nav aria-label="...">
       <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link"><i class="fa-solid fa-angles-left"></i></a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item" aria-current="page">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item">
-          <a class="page-link" href="#"><i class="fa-solid fa-angles-right"></i></a>
+          <a id="prev-page"  class="page-link" href="#"><i class="fa-solid fa-angles-left"></i></a>
+        </li>
+        {{#times novel.totalPage}}
+         {{#if @first}}
+           <li class="page-item"><a class="page-link" href="#">{{sum @index 1}}</a></li>
+          {{else}}
+          <li class="page-item"><a class="page-link" href="#">{{sum @index 1}}</a></li>
+          {{/if}}
+        {{/times}}
+       
+        <li class="page-item">
+          <a id="next-page" class="page-link" href="#"><i class="fa-solid fa-angles-right"></i></a>
         </li>
       </ul>
     </nav>
   </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+     
     const descriptionElement = document.getElementById('novel-description');
     const toggleButton = document.getElementById('toggle-description');
     const maxLength = 500; // Giới hạn độ dài mô tả
@@ -109,4 +113,74 @@
       });
     }
   });
+
+  $(document).ready(function() {
+     let currentPage = 1;
+     let totalPage=parseInt(`{{novel.totalPage}}`)
+     
+     const name=`{{novel.slug}}`
+    $(document).on('click', '.page-link', function(e) {
+        e.preventDefault();
+        const page = $(this).text();
+        if (!isNaN(parseInt(page))) {
+            currentPage = parseInt(page);
+            fetchChapters(currentPage);
+        }
+    });
+
+     // Event listener for next and previous buttons
+    $('#prev-page').click(function(e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+           
+            currentPage--;
+            console.log(currentPage)
+            fetchChapters(currentPage);
+        }
+    });
+
+    $('#next-page').click(function(e) {
+        e.preventDefault();
+        if (currentPage < totalPage) {
+            currentPage++;
+            fetchChapters(currentPage);
+        }
+    });
+
+    function fetchChapters(page) {
+        $.ajax({
+            url: `http://localhost:3000/ajax?type=page_select&name=${name}&page=${page}`,
+            method: 'GET',
+            success: function(data) {
+                updateChapterList(data.chapters);
+                updatePagination(page)
+            },
+            error: function(err) {
+                console.error("Error fetching chapters:", err);
+            }
+        });
+      }
+
+    function updatePagination(page) {
+        $('.pagination .page-item').removeClass('active');
+        $(`.pagination .page-item:contains(${page})`).addClass('active');
+    }
+
+       // Update chapter list in the DOM
+    function updateChapterList(chapters) {
+        const leftList = $('#chapter-list-left');
+        const rightList = $('#chapter-list-right');
+        leftList.empty();
+        rightList.empty();
+
+        chapters.forEach((chapter, index) => {
+            const listItem = `<li><a class="text-link" href="/${chapter.chapterSlug}">${chapter.chapterTitle}</a></li>`;
+            if (index % 2 === 0) {
+                leftList.append(listItem);
+            } else {
+                rightList.append(listItem);
+            }
+        });
+    }
+  })
 </script>

@@ -224,6 +224,7 @@ class Source1 {
             const image = $('img[itemprop="image"]').attr('src');
             const author = $('a[itemprop="author"]').text().trim();
             const authorUrl = $('a[itemprop="author"]').attr('href');
+            const totalPage=$('#total-page').val();
 
             const genres = [];
             $('a[itemprop="genre"]').each((i, el) => {
@@ -276,7 +277,8 @@ class Source1 {
                 },
                 description,
                 chapters,
-                slug:slug
+                slug:slug,
+                totalPage
             };
         } catch (error) {
             console.error('Error fetching novel info:', error);
