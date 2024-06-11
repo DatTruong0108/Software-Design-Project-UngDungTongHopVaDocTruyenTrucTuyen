@@ -45,7 +45,7 @@
     </div>
 
     <div class="name-novel">
-        {{content.storyName}}
+        {{title}}
     </div>
     <div class="text-name-chap text-center">
         {{content.chapterTitle}}
@@ -55,8 +55,10 @@
 <div id="background-div" class="text-center mt-4" style="background-color: #EFF8FE;">
     <br>
     <p>Nếu không xem được truyện vui lòng đổi <strong>“SERVER ẢNH”</strong> bên dưới</p>
-    <button type="button" class="btn btn-success mb-4">Server 1</button>
-    <button type="button" class="btn btn-primary mb-4" style="margin-left: 30px;">Server 2</button>
+    <div id="button-container">
+      <button type="button" class="server-button btn btn-success mb-4"><a style="color: #EFF8FE;" class="text-link" href="{{baseUrl}}?server=1">Server 1</a></button>
+      <button type="button" class="server-button btn btn-secondary mb-4" style="margin-left: 30px;"><a style="color: #EFF8FE;" class="text-link" href="{{baseUrl}}?server=2">Server 2</a></button>
+    </div>
 </div>
 
 <div class="container mt-4 mb-4">
@@ -123,6 +125,8 @@
 <input type="hidden" value="{{currentNovel}}" id="currNovel"></input>
 
 <script>
+     // Get the container element that holds all buttons
+      
     document.addEventListener('DOMContentLoaded', function () {
         const chapterSelect = document.getElementById('chapterSelect');
         const chapterSelect1 = document.getElementById('chapterSelect1');

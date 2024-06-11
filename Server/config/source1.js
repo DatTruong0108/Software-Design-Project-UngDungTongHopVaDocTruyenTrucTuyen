@@ -285,6 +285,86 @@ class Source1 {
         }
     }
 
+    async scrapeNovelInfoByPage(slug,name,page) {
+        try {
+            const novelUrl=url+'/'+slug;
+            // Fetch the HTML from the given URL
+            const { data } = await axios.get(novelUrl, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            });
+    
+            // Load the HTML into cheerio
+            const $ = cheerio.load(data);
+            // console.log(data)
+    
+            // Extract novel information
+            const title = $('h3.title[itemprop="name"]').text().trim();
+            const image = $('img[itemprop="image"]').attr('src');
+            const author = $('a[itemprop="author"]').text().trim();
+            const authorUrl = $('a[itemprop="author"]').attr('href');
+            const totalPage=$('#total-page').val();
+
+            const genres = [];
+            $('a[itemprop="genre"]').each((i, el) => {
+                genres.push($(el).text().trim());
+            });
+            const uniqueGenres = [];
+            const seen = {};
+            genres.forEach((genre) => {
+                const lowerCaseGenre = genre.toLowerCase();
+                if (!seen[lowerCaseGenre]) {
+                    seen[lowerCaseGenre] = true;
+                    uniqueGenres.push(genre);
+                }
+            });
+            const genreUrls = [];
+            $('a[itemprop="genre"]').each((i, el) => {
+                genreUrls.push($(el).attr('href'));
+            });
+            // console.log(genres)
+
+            const source = $('.source').text().trim();
+            const status = $('.text-success').text().trim();
+            const ratingValue = $('span[itemprop="ratingValue"]').text().trim();
+            const ratingCount = $('span[itemprop="ratingCount"]').text().trim();
+            const description = $('div.desc-text[itemprop="description"]').html();
+    
+            // Extract chapters information
+            const chapters = [];
+            $('.list-chapter li a').each((i, el) => {
+                const chapterTitle = $(el).text().trim();
+                const chapterUrl = $(el).attr('href');
+                const chapterSlug=name+"/chuong-"+((i+1)+(parseInt(page)-1)*50);
+                chapters.push({ chapterTitle, chapterUrl,chapterSlug });
+            });
+            
+    
+            // Return the extracted informatiosn
+            return {
+                title,
+                image,
+                author,
+                authorUrl,
+                genres: uniqueGenres,
+                genreUrls,
+                source,
+                status,
+                rating: {
+                    value: ratingValue,
+                    count: ratingCount
+                },
+                description,
+                chapters,
+                slug:slug,
+                totalPage
+            };
+        } catch (error) {
+            console.error('Error fetching novel info:', error);
+        }
+    }
+
     async scrapeChapterData(slug) {
         try {
             const chapterUrl=url+slug;

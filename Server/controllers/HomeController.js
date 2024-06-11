@@ -64,7 +64,7 @@ class HomeController {
         }
         else if (type=="page_select"){
             const temp=name+"/trang-"+page;
-            result=await Source1.scrapeNovelInfo(temp)
+            result=await Source1.scrapeNovelInfoByPage(temp,name,page)
         }
         
 
