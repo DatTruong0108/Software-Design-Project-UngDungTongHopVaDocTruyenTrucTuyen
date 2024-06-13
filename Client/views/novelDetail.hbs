@@ -4,14 +4,14 @@
   </div>
   <div class="product-detail">
     <div class="row">
-      {{!-- col-md-5 d-flex align-items-center justify-content-center --}}
       <div class="col-md-5 d-flex flex-column align-items-center">
-        <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid novel-img"> 
+        <img src="{{novel.image}}" alt="{{novel.title}}" class="img-fluid novel-img">
         <div class="d-flex justify-content-around w-50 mt-3">
           {{#ifEqual currentChapter -1}}
-               <a href="" style="background: #696969; color: white; pointer-events: none;" class="btn mx-2">Đọc tiếp</a>
+          <a href="" style="background: #696969; color: white; pointer-events: none;" class="btn mx-2">Đọc tiếp</a>
           {{else}}
-            <a href="/{{novel.slug}}/chuong-{{currentChapter}}" style="background: #EB455F; color: white; " class="btn mx-2">Đọc tiếp</a>
+          <a href="/{{novel.slug}}/chuong-{{currentChapter}}" style="background: #EB455F; color: white;"
+            class="btn mx-2">Đọc tiếp</a>
           {{/ifEqual}}
           <a href="/{{novel.slug}}/chuong-1" style="background: #EB455F; color: white;" class="btn mx-2">Đọc từ đầu</a>
         </div>
@@ -42,7 +42,7 @@
   <div class="title-list mt-4">
     <h3>DANH SÁCH CHƯƠNG</h3>
     <hr>
-    <div >
+    <div>
       <div id="chapter-list" class="row">
         <div class="col-xs-12 col-sm-6">
           <ul id="chapter-list-left">
@@ -67,30 +67,45 @@
   </div>
 
   <div class="container mt-4 mb-4">
-    <nav aria-label="...">
+    <nav aria-label="Page navigation example" class="mb-4">
       <ul class="pagination justify-content-center">
         <li class="page-item">
-          <a id="prev-page"  class="page-link" href="#"><i class="fa-solid fa-angles-left"></i></a>
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="prev-page">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
         </li>
-        {{#times novel.totalPage}}
-         {{#if @first}}
-           <li class="page-item"><a class="page-link" href="#">{{sum @index 1}}</a></li>
-          {{else}}
-          <li class="page-item"><a class="page-link" href="#">{{sum @index 1}}</a></li>
-          {{/if}}
-        {{/times}}
-       
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="page-1">1</a>
+        </li>
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="page-2">2</a>
+        </li>
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="page-3">3</a>
+        </li>
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="page-4">4</a>
+        </li>
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="page-5">5</a>
+        </li>
+        <li class="page-item dynamic">
+          <a class="page-link custom-pagination-background custom-page-number" href="#"
+            id="page-last">{{novel.totalPage}}</a>
+        </li>
         <li class="page-item">
-          <a id="next-page" class="page-link" href="#"><i class="fa-solid fa-angles-right"></i></a>
+          <a class="page-link custom-pagination-background custom-page-number" href="#" id="next-page">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
         </li>
       </ul>
     </nav>
   </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-     
     const descriptionElement = document.getElementById('novel-description');
     const toggleButton = document.getElementById('toggle-description');
     const maxLength = 500; // Giới hạn độ dài mô tả
@@ -114,74 +129,109 @@
     }
   });
 
-  $(document).ready(function() {
-     let currentPage = 1;
-     let totalPage=parseInt(`{{novel.totalPage}}`)
-     
-     const name=`{{novel.slug}}`
-    $(document).on('click', '.page-link', function(e) {
-        e.preventDefault();
-        const page = $(this).text();
-        if (!isNaN(parseInt(page))) {
-            currentPage = parseInt(page);
-            fetchChapters(currentPage);
-        }
+  $(document).ready(function () {
+    let currentPage = 1;
+    let totalPage = parseInt(`{{novel.totalPage}}`);
+    const name = `{{novel.slug}}`;
+
+    $(document).on('click', '.page-link', function (e) {
+      e.preventDefault();
+      const page = $(this).text();
+      if (!isNaN(parseInt(page))) {
+        currentPage = parseInt(page);
+        fetchChapters(currentPage);
+      }
     });
 
-     // Event listener for next and previous buttons
-    $('#prev-page').click(function(e) {
-        e.preventDefault();
-        if (currentPage > 1) {
-           
-            currentPage--;
-            console.log(currentPage)
-            fetchChapters(currentPage);
-        }
+    // Event listener for next and previous buttons
+    $('#prev-page').click(function (e) {
+      e.preventDefault();
+      if (currentPage > 1) {
+        currentPage--;
+        fetchChapters(currentPage);
+      }
     });
 
-    $('#next-page').click(function(e) {
-        e.preventDefault();
-        if (currentPage < totalPage) {
-            currentPage++;
-            fetchChapters(currentPage);
-        }
+    $('#next-page').click(function (e) {
+      e.preventDefault();
+      if (currentPage < totalPage) {
+        currentPage++;
+        fetchChapters(currentPage);
+      }
     });
 
     function fetchChapters(page) {
-        $.ajax({
-            url: `http://localhost:3000/ajax?type=page_select&name=${name}&page=${page}`,
-            method: 'GET',
-            success: function(data) {
-                updateChapterList(data.chapters);
-                updatePagination(page)
-            },
-            error: function(err) {
-                console.error("Error fetching chapters:", err);
-            }
-        });
+      $.ajax({
+        url: `http://localhost:3000/ajax?type=page_select&name=${name}&page=${page}`,
+        method: 'GET',
+        success: function (data) {
+          updateChapterList(data.chapters);
+          updatePagination(page, totalPage);
+        },
+        error: function (err) {
+          console.error("Error fetching chapters:", err);
+        }
+      });
+    }
+
+    function updatePagination(currentPage, totalPage) {
+      const paginationContainer = $('.pagination');
+      paginationContainer.find('.page-item.dynamic').remove();
+
+      let pages = [];
+      if (totalPage <= 7) {
+        pages = [...Array(totalPage).keys()].map(i => i + 1);
+      } else if (currentPage <= 4) {
+        pages = [1, 2, 3, 4, 5, '...', totalPage];
+      } else if (currentPage >= totalPage - 3) {
+        pages = [1, '...', totalPage - 4, totalPage - 3, totalPage - 2, totalPage - 1, totalPage];
+      } else {
+        pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPage];
       }
 
-    function updatePagination(page) {
-        $('.pagination .page-item').removeClass('active');
-        $(`.pagination .page-item:contains(${page})`).addClass('active');
-    }
-
-       // Update chapter list in the DOM
-    function updateChapterList(chapters) {
-        const leftList = $('#chapter-list-left');
-        const rightList = $('#chapter-list-right');
-        leftList.empty();
-        rightList.empty();
-
-        chapters.forEach((chapter, index) => {
-            console.log(chapter.chapterSlug)
-            const listItem = `<li><a class="text-link" href="/${chapter.chapterSlug}">${chapter.chapterTitle}</a></li>`;
-            if (index % 2 === 0) {
-                leftList.append(listItem);
-            } else {
-                rightList.append(listItem);
+      pages.forEach(page => {
+        const pageItem = $('<li>', { class: 'page-item dynamic' });
+        if (page === '...') {
+          pageItem.append($('<span>', { class: 'page-link', text: '...' }));
+        } else {
+          const pageLink = $('<a>', {
+            class: 'page-link custom-pagination-background custom-page-number',
+            href: '#',
+            text: page
+          }).click(function () {
+            if (currentPage !== page) {
+              currentPage = page;
+              fetchChapters(currentPage);
             }
-        });
+          });
+
+          if (page === currentPage) {
+            pageItem.addClass('active');
+          }
+
+          pageItem.append(pageLink);
+        }
+
+        $('#next-page').parent().before(pageItem);
+      });
     }
-  })
+
+    function updateChapterList(chapters) {
+      const leftList = $('#chapter-list-left');
+      const rightList = $('#chapter-list-right');
+      leftList.empty();
+      rightList.empty();
+
+      chapters.forEach((chapter, index) => {
+        const listItem = `<li><a class="text-link" href="/${chapter.chapterSlug}">${chapter.chapterTitle}</a></li>`;
+        if (index % 2 === 0) {
+          leftList.append(listItem);
+        } else {
+          rightList.append(listItem);
+        }
+      });
+    }
+
+    fetchChapters(currentPage);
+  });
 </script>
