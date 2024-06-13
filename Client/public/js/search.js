@@ -1,32 +1,31 @@
 $(document).ready(function() {
-    $('#searchForm').on('submit', function(e){
+    $("#searchForm").on("submit", function(e) {
         e.preventDefault();
-        var container = $('#mainContainer');
+        const container = $("#mainContainer");
         container.empty();  // Clear the current content
-        var searchInput = $('#searchInput').val();
-        var url = 'http://localhost:3000/search?name=' + searchInput;
-        const newUrl = `/search?name=${searchInput.replace(/ /g, '+')}`;
-        history.pushState({ searchInput: searchInput.replace(/ /g, '+')}, '', newUrl);
+        const searchInput = $("#searchInput").val();
+        const url = "http://localhost:3000/search?name=" + searchInput;
+        const newUrl = `/search?name=${searchInput.replace(/ /g, "+")}`;
+        history.pushState({ searchInput: searchInput.replace(/ /g, "+") }, "", newUrl);
         $.ajax({
             url: url,
-            method: 'POST',
+            method: "POST",
             success: function(data) {
-                var novelsResult = data.searchResult;  // Adjust according to the structure of the response
-                console.log(novelsResult)
-            
-                if(novelsResult.length==0){
-                    var novelHtml = `
+                const novelsResult = data.searchResult;  // Adjust according to the structure of the response
+                // console.log(novelsResult);
+
+                if (novelsResult.length == 0) {
+                    const novelHtml = `
                     <h2 class="my-4">Danh sách truyện</h2>
                             <div class="row" id="novel-list">
                                 No result or Search string is too short 
                             </div>
                     `;
                     container.append(novelHtml);
-                }
-                else{
-                    var novelHtml = `
+                } else {
+                    const novelHtml = `
                     <h2 class="my-4">Danh sách truyện</h2>
-    <div class="row" id="novel-list">`
+    <div class="row" id="novel-list">`;
                     novelsResult.forEach(function(novel) {
                         novelHtml += `
                             <div class="col-md-2 novel-card">
@@ -41,13 +40,13 @@ $(document).ready(function() {
     </div>
                         `;
                     });
-                    novelHtml +=  `</div>`;
+                    novelHtml += "</div>";
                     container.append(novelHtml);
                 }
-                
+
             },
             error: function(err) {
-                console.error('Error loading content:', err);
+                console.error("Error loading content:", err);
             }
         });
     });

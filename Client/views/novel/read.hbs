@@ -19,16 +19,18 @@
                         <form id="export-form">
                             <li class="d-flex justify-content: space-between; align-items-center mt-2">
                                 <a class="dropdown-export-text"><strong>Chọn chương</strong></a>
-                                <select id="chapterExport" class="form-select custom-select-export " aria-label="Default select example">
-                                    <option value="All" selected>All</option>                                
-                                {{#each chapters}}
+                                <select id="chapterExport" class="form-select custom-select-export "
+                                    aria-label="Default select example">
+                                    <option value="All" selected>All</option>
+                                    {{#each chapters}}
                                     <option value='chuong-{{sum @index 1}}'>{{chapterTitle}}</option>
-                                {{/each}}
+                                    {{/each}}
                                 </select>
                             </li>
                             <li class="d-flex justify-content: space-between; align-items-center mt-2">
                                 <a class="dropdown-export-text"><strong>Dạng tập tin</strong></a>
-                                <select id="exportType" class="form-select custom-select-export " aria-label="Default select example">
+                                <select id="exportType" class="form-select custom-select-export "
+                                    aria-label="Default select example">
                                     <option value="prc" selected>mobi</option>
                                     <option value="epub">epub</option>
                                     <option value="pdf">pdf</option>
@@ -56,8 +58,11 @@
     <br>
     <p>Nếu không xem được truyện vui lòng đổi <strong>“SERVER ẢNH”</strong> bên dưới</p>
     <div id="button-container">
-      <button type="button" class="server-button btn btn-success mb-4"><a style="color: #EFF8FE;" class="text-link" href="{{baseUrl}}?server=1">Server 1</a></button>
-      <button type="button" class="server-button btn btn-secondary mb-4" style="margin-left: 30px;"><a style="color: #EFF8FE;" class="text-link" href="{{baseUrl}}?server=2">Server 2</a></button>
+        <button type="button" id="server1-btn" class="server-button btn mb-4"><a style="color: #EFF8FE;"
+                class="text-link" href="{{baseUrl}}?server=1">Server 1</a></button>
+        <button type="button" id="server2-btn" class="server-button btn mb-4" style="margin-left: 30px;"><a
+                style="color: #EFF8FE;" class="text-link" href="{{baseUrl}}?server=2">Server
+                2</a></button>
     </div>
 </div>
 
@@ -125,7 +130,28 @@
 <input type="hidden" value="{{currentNovel}}" id="currNovel"></input>
 
 <script>
-     // Get the container element that holds all buttons 
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');
+        let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+
+    // Lấy giá trị của tham số 'server' từ URL
+    let server = getParameterByName('server');
+
+    // Thiết lập lớp CSS cho các nút dựa trên giá trị của tham số 'server'
+    if (server === '1' || server === null) {
+        document.getElementById('server1-btn').classList.add('btn-success');
+        document.getElementById('server2-btn').classList.add('btn-secondary');
+    } else if (server === '2') {
+        document.getElementById('server1-btn').classList.add('btn-secondary');
+        document.getElementById('server2-btn').classList.add('btn-success');
+    }
+    // Get the container element that holds all buttons
+
     document.addEventListener('DOMContentLoaded', function () {
         const chapterSelect = document.getElementById('chapterSelect');
         const chapterSelect1 = document.getElementById('chapterSelect1');
@@ -155,7 +181,7 @@
             document.getElementById(id).removeAttribute("style");
         });
 
-        
+
     });
     document.addEventListener("DOMContentLoaded", function () {
         /*Thay đổi màu nền*/
@@ -296,48 +322,48 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-    $('#searchForm').on('submit', function(e){
-        e.preventDefault();
-        var searchInput = $('#searchInput').val();
-        window.location.href = 'http://localhost:3000/search?name=' + searchInput;
-    });
+<script>
+    $(document).ready(function () {
+        $('#searchForm').on('submit', function (e) {
+            e.preventDefault();
+            var searchInput = $('#searchInput').val();
+            window.location.href = 'http://localhost:3000/search?name=' + searchInput;
+        });
 
-    $('#export-form').on('submit', async function(e){
-                
-                e.preventDefault();
-                const exportType = $('#exportType').val();
-                const chapterExport = $('#chapterExport').val();
-                const currNovel = $('#currNovel').val()
-                const response = await fetch('http://localhost:3000/export', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ chapterExport, exportType, currNovel })
-                });
-                const filenameSlug = currNovel.slice(1) + '-' +chapterExport;
-                const filename = filenameSlug.replace(/-/g, '_');
-                const blob = await response.blob();
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.style.display = 'none';
-                a.href = url;
-                var fileExtension;
-                if (exportType === 'pdf') {
-                    fileExtension = 'pdf';
-                } else if (exportType === 'epub') {
-                    fileExtension = 'epub';
-                } else if (exportType === 'prc') {
-                    fileExtension = 'mobi';
-                } 
-                a.download = `${filename}.${fileExtension}`;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
+        $('#export-form').on('submit', async function (e) {
+
+            e.preventDefault();
+            const exportType = $('#exportType').val();
+            const chapterExport = $('#chapterExport').val();
+            const currNovel = $('#currNovel').val()
+            const response = await fetch('http://localhost:3000/export', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ chapterExport, exportType, currNovel })
             });
+            const filenameSlug = currNovel.slice(1) + '-' + chapterExport;
+            const filename = filenameSlug.replace(/-/g, '_');
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            var fileExtension;
+            if (exportType === 'pdf') {
+                fileExtension = 'pdf';
+            } else if (exportType === 'epub') {
+                fileExtension = 'epub';
+            } else if (exportType === 'prc') {
+                fileExtension = 'mobi';
             }
-        );
+            a.download = `${filename}.${fileExtension}`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+    }
+    );
 
-    </script>
+</script>

@@ -26,13 +26,13 @@
 }
 
 .font-footer {
-    font-family: 'Hannari', sans-serif;
+    font-family: Hannari, sans-serif;
     font-size: 2em;
     margin-left: 10px;
 }
 
 .font-footer2 {
-    font-family: 'Hannari', sans-serif;
+    font-family: Hannari, sans-serif;
     font-size: 1em;
     color: #897272;
 }
@@ -43,14 +43,14 @@
 
 .footer-text {
     white-space: nowrap;
-}
-
-.footer-text {
     color: #2B3467;
+
     /* Đổi màu văn bản */
     font-family: 'Roboto Serif', serif;
+
     /* Đổi kiểu chữ */
     font-weight: 600;
+
     /* Semibold thường tương đương với 600 */
 }
 
@@ -66,6 +66,7 @@
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     color: #000;
+
     /* Set the color to black */
 }
 
@@ -80,7 +81,7 @@
     background-color: #fae6d47d;
     padding: 30px;
     border-radius: 2px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgb(0 0 0 / 10%);
 }
 
 .product-detail img {
@@ -115,45 +116,59 @@
 }
 
 .btn-search {
-    color: #ffffff;
+    color: #fff;
+
     /* Màu chữ trắng */
     background-color: #2B3467;
+
     /* Nền màu #2B3467 */
     border: none;
+
     /* Loại bỏ viền mặc định */
     padding: 10px 5px;
+
     /* Điều chỉnh khoảng cách bên trong */
     border-radius: 5px;
+
     /* Bo góc nút */
     font-size: 16px;
+
     /* Kích thước chữ */
     cursor: pointer;
+
     /* Thay đổi con trỏ khi hover */
     transition: background-color 0.3s;
+
     /* Hiệu ứng chuyển đổi màu nền */
     min-width: 80px;
+
     /* Đặt chiều rộng tối thiểu cho nút */
     text-align: center;
+
     /* Căn giữa chữ trong nút */
 }
 
 .btn-search:hover {
     background-color: #4F61C5;
+
     /* Màu nền khi hover */
 }
 
 .white-icon {
     color: white;
+
     /* Màu trắng cho biểu tượng */
 }
 
 .white-icon:hover {
     color: #BAD7E9;
+
     /* Màu trắng cho biểu tượng */
 }
 
 .list-group-item {
     background-color: #EFF8FE;
+
     /* Màu nền cho từng mục trong danh sách */
 }
 
@@ -163,14 +178,16 @@
 
 .nav-link.dropdown-toggle:focus {
     background-color: #4F61C5;
+
     /* Đổi màu nền tại đây */
 }
 
 .dropdown-menu-text {
-    color: #ffffff;
+    color: #fff;
     flex: 1;
     margin-left: 10px;
     text-decoration: none;
+
     /* Loại bỏ gạch chân dưới chữ */
 }
 
@@ -179,13 +196,16 @@
     flex: 1;
     margin-left: 20px;
     text-decoration: none;
+
     /* Loại bỏ gạch chân dưới chữ */
 }
 
 .custom-card {
     max-width: 400px;
+
     /* Hoặc giá trị chiều ngang mong muốn */
     margin: 0 auto;
+
     /* Căn giữa card */
 }
 
@@ -207,6 +227,7 @@
     border-color: #EB455F;
     border-width: 2px;
     background-color: white;
+
     /* Tăng độ rộng viền */
     border-style: solid;
 }
@@ -234,18 +255,18 @@
     text-align: center;
     color: #2B3467;
     font-size: 40px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
 }
 
 .text-name-chap {
     font-size: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     color:#767676;
 }
 
 .text-content {
     font-size: 20px;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     color: #000;
     line-height: 1.15;
 }
@@ -254,7 +275,7 @@
     border-radius: 0;
     background-color: #40A2D8;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 16px;
 }
 
@@ -262,7 +283,7 @@
     border-radius: 0;
     background-color: #40A2D8;
     color: white;
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
     font-size: 16px;
     appearance: none;
     background-image: url('data:image/svg+xml;utf8,<svg fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>');
@@ -274,6 +295,7 @@
 
 .pagination .page-item {
     margin: 0 3px;
+
     /* Khoảng cách 5px giữa các phần tử */
 }
 
@@ -301,8 +323,7 @@
 
 #toggle-description {
     background-color: #eb8d3a7d;
-    color: rgb(58, 57, 57);
-    border: none;
+    color: rgb(58 57 57);
     padding: 5px 10px;
     cursor: pointer;
     margin-top: 10px;
@@ -315,6 +336,7 @@
 }
 
 /* fae6d47d */
+
 /* Màu nền */
 .bg-peachpuff {
     background-color: #fae6d47d;
@@ -387,7 +409,7 @@
 }
 
 .font-roboto {
-    font-family: 'Roboto', sans-serif;
+    font-family: Roboto, sans-serif;
 }
 
 .font-timesnewroman {
@@ -471,19 +493,23 @@
 .novel-card {
     margin-bottom: 20px;
 }
+
 .novel-card img {
     align-self: center;
     width: 50%;
     height: auto;
 }
+
 .novel-info {
     padding: 10px;
     background-color: #f8f9fa;
 }
+
 .novel-title {
     font-size: 1.25rem;
     font-weight: bold;
 }
+
 .novel-author, .novel-chapter {
     font-size: 1rem;
 }

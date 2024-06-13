@@ -1,7 +1,6 @@
-const { join } = require('path');
-const Source1=require('../config/source1')
-const Source2=require('../config/source2');
-const { each } = require('jquery');
+// const { join } = require('path');
+const Source1 = require("../config/source1");
+const Source2 = require("../config/source2");
 
 function extractChapterNumber(chapterTitle) {
     const regex = /chuong-(\d+)/i;
@@ -10,20 +9,28 @@ function extractChapterNumber(chapterTitle) {
 }
 
 class NovelController {
-    async genre(req, res, next) {
-        const slug=req.params.name;
-        const navbarList=await Source1.scrapeGenres();
-        const novelList=await Source1.scrapeNovelByGenre("genre",slug)
+    async genre(req, res) {
+        const slug = req.params.name;
+        const navbarList = await Source1.scrapeGenres();
+        const novelList = await Source1.scrapeNovelByGenre("genre", slug);
 
-        res.render("novel/viewByGenre",{genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList})
+        res.render("novel/viewByGenre", {
+            genresList: navbarList.genres,
+            topicsList: navbarList.danhSachList,
+            novelList
+        });
     }
 
-    async topic(req, res, next) {
-        const slug=req.params.name;
-        const navbarList=await Source1.scrapeGenres();
-        const novelList=await Source1.scrapeNovelByGenre("topic",slug)
+    async topic(req, res) {
+        const slug = req.params.name;
+        const navbarList = await Source1.scrapeGenres();
+        const novelList = await Source1.scrapeNovelByGenre("topic", slug);
 
-        res.render("novel/viewByGenre",{genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList})
+        res.render("novel/viewByGenre", {
+            genresList: navbarList.genres,
+            topicsList: navbarList.danhSachList,
+            novelList
+        });
     }
     
     async read(req, res, next) {
@@ -46,7 +53,7 @@ class NovelController {
             list.push({chapterTitle: "Chương "+(i+1), chapterSlug:`${novelDetail.slug}/chuong-${i+1}`})
         }
 
-
+        console.log(list[60])
 
         if (!isNaN(parseInt(server))){
             if (parseInt(server)==1){
@@ -56,11 +63,10 @@ class NovelController {
             else if (parseInt(server)==2){
                 content=await Source2.scrapeChapterData(chapterSlug);
             }
+        } else {
+            content = await Source1.scrapeChapterData(chapterSlug);
         }
-        else{
-            content=await Source1.scrapeChapterData(chapterSlug);
-        }
-       
+
         //console.log(chapterSlug);
       
         let historyList = [];
@@ -68,7 +74,7 @@ class NovelController {
         if (req.cookies.historyList) {
             historyList = JSON.parse(req.cookies.historyList);
             const existingEntry = historyList.find(item => item.name === name);
-    
+
             if (existingEntry) {
                 // Update the chapter number for the existing entry
                 existingEntry.chapterNumber = chapterNumber;
@@ -80,18 +86,22 @@ class NovelController {
             // Create a new history list and add the current entry
             historyList.push({ name, chapterNumber });
         }
-        
-        
-        res.cookie('historyList', JSON.stringify(historyList), { maxAge: 86400000,httpOnly: true });
-       
 
-        res.cookie('currenNovel', name, { maxAge: 86400000});
-        res.cookie('currenChapter', chapterNumber, { maxAge: 86400000});
-        if (isNaN(server)){
-            server=1
+        res.cookie("historyList", JSON.stringify(historyList), { maxAge: 86400000, httpOnly: true });
+
+        res.cookie("currenNovel", name, { maxAge: 86400000 });
+        res.cookie("currenChapter", chapterNumber, { maxAge: 86400000 });
+        if (isNaN(server)) {
+            server = 1;
         }
-        
-        res.render("novel/read",{server,baseUrl: chapterSlug,title:novelDetail.title,content,chapters:list,currentNovel:name, currentChapter: chapterNumber})
+
+        res.render("novel/read", {
+            server, baseUrl: chapterSlug,
+            title: novelDetail.title, content,
+            chapters: list,
+            currentNovel: name,
+            currentChapter: chapterNumber
+        });
     }
 }
 
