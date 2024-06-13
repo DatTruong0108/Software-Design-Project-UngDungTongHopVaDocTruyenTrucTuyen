@@ -1,6 +1,7 @@
 const { join } = require('path');
 const Source1=require('../config/source1')
-const Source2=require('../config/source2')
+const Source2=require('../config/source2');
+const { each } = require('jquery');
 
 function extractChapterNumber(chapterTitle) {
     const regex = /chuong-(\d+)/i;
@@ -26,6 +27,7 @@ class NovelController {
     }
     
     async read(req, res, next) {
+
         let server=req.query.server;
         const name=req.baseUrl;
         const chapter=req.params.chapter;
@@ -34,9 +36,22 @@ class NovelController {
         let content
 
         const novelDetail=await Source1.scrapeNovelInfo(name.slice(1));    
+
+        const temp=novelDetail.slug+"/trang-"+novelDetail.totalPage;
+        const result=await Source1.scrapeNovelInfoByPage(temp,novelDetail.slug,novelDetail.totalPage)
+        const totalChapters=(novelDetail.totalPage-1)*50+result.chapters.length;
+        const list=[]
+
+        for (let i=0; i<totalChapters; i++){
+            list.push({chapterTitle: "Chương "+(i+1), chapterSlug:`${novelDetail.slug}/chuong-${i+1}`})
+        }
+
+
+
         if (!isNaN(parseInt(server))){
             if (parseInt(server)==1){
                 content=await Source1.scrapeChapterData(chapterSlug);
+
             }
             else if (parseInt(server)==2){
                 content=await Source2.scrapeChapterData(chapterSlug);
@@ -47,7 +62,7 @@ class NovelController {
         }
        
         //console.log(chapterSlug);
-        //console.log(content);
+      
         let historyList = [];
 
         if (req.cookies.historyList) {
@@ -76,7 +91,7 @@ class NovelController {
             server=1
         }
         
-        res.render("novel/read",{server,baseUrl: chapterSlug,title:novelDetail.title,content,chapters:novelDetail.chapters,currentNovel:name, currentChapter: chapterNumber})
+        res.render("novel/read",{server,baseUrl: chapterSlug,title:novelDetail.title,content,chapters:list,currentNovel:name, currentChapter: chapterNumber})
     }
 }
 
