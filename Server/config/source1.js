@@ -1,29 +1,26 @@
 
 // const { Scraper, Root, CollectContent, OpenLinks } = require('nodejs-web-scraper');
-const axios = require('axios');
-const cheerio = require('cheerio');
+const axios = require("axios");
+const cheerio = require("cheerio");
 // const { options } = require('../routes/home');
 
-const url = 'https://truyenfull.vn';
-
+const url = "https://truyenfull.vn";
 
 function getSlugFromUrl(url) {
     if (url) {
         const urlObj = new URL(url);
-        const pathSegments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        const pathSegments = urlObj.pathname.split("/").filter(segment => segment.length > 0);
         return pathSegments[0];
-    }
-    else return url
+    } else return url;
 
 }
 
 function getGenreSlugFromUrl(url) {
     if (url) {
         const urlObj = new URL(url);
-        const pathSegments = urlObj.pathname.split('/').filter(segment => segment.length > 0);
+        const pathSegments = urlObj.pathname.split("/").filter(segment => segment.length > 0);
         return pathSegments[1];
-    }
-    else return url
+    } else return url;
 
 }
 
@@ -33,17 +30,15 @@ function extractChapterNumber(chapterTitle) {
     return match ? match[1] : null;
 }
 
-
 class Source1 {
     async srapeHotNovelsListByGenre(url) {
         try {
             // Gửi yêu cầu HTTP đến trang web
             const { data } = await axios.get(url, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
-
 
             // Phân tích cú pháp HTML
             const $ = cheerio.load(data);
@@ -51,10 +46,10 @@ class Source1 {
             const bookList = [];
 
             // Select each book item and extract the necessary information
-            $('div.item').each((index, element) => {
-                const title = $(element).find('.title h3').text().trim();
-                const url = $(element).find('a').attr('href').trim();
-                const image = $(element).find('img').attr('src').trim();
+            $("div.item").each((index, element) => {
+                const title = $(element).find(".title h3").text().trim();
+                const url = $(element).find("a").attr("href").trim();
+                const image = $(element).find("img").attr("src").trim();
                 const slug = getSlugFromUrl(url);
 
                 bookList.push({ title, url, image, slug });
@@ -62,9 +57,8 @@ class Source1 {
 
             return bookList;
 
-
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
         }
     }
 
@@ -73,29 +67,27 @@ class Source1 {
             // Gửi yêu cầu HTTP đến trang web
             const { data } = await axios.get(url, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
-
 
             // Phân tích cú pháp HTML
             const $ = cheerio.load(data);
 
             const truyenDetails = [];
-            $('#intro-index .item').each((index, element) => {
-                const title = $(element).find('h3[itemprop="name"]').text().trim();
-                const url = $(element).find('a[itemprop="url"]').attr('href');
-                const image = $(element).find('img[itemprop="image"]').attr('src');
+            $("#intro-index .item").each((index, element) => {
+                const title = $(element).find("h3[itemprop=\"name\"]").text().trim();
+                const url = $(element).find("a[itemprop=\"url\"]").attr("href");
+                const image = $(element).find("img[itemprop=\"image\"]").attr("src");
                 const slug = getSlugFromUrl(url);
 
                 truyenDetails.push({ title, url, image, slug });
             });
 
-
             // In ra kết quả
-            return truyenDetails
+            return truyenDetails;
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
         }
     }
 
@@ -104,32 +96,30 @@ class Source1 {
             // Gửi yêu cầu HTTP đến trang web với headers giả lập trình duyệt
             const { data } = await axios.get(url, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
 
             // Phân tích cú pháp HTML
             const $ = cheerio.load(data);
 
-
             // Lấy danh sách các truyện từ thẻ list-index
             const truyenDetails = [];
-            $('.row[itemscope][itemtype="https://schema.org/Book"]').each((index, element) => {
-                const title = $(element).find('h3[itemprop="name"] a').text().trim();
-                const url = $(element).find('h3[itemprop="name"] a').attr('href');
-                const genreElements = $(element).find('div.col-cat a[itemprop="genre"]');
+            $(".row[itemscope][itemtype=\"https://schema.org/Book\"]").each((index, element) => {
+                const title = $(element).find("h3[itemprop=\"name\"] a").text().trim();
+                const url = $(element).find("h3[itemprop=\"name\"] a").attr("href");
+                const genreElements = $(element).find("div.col-cat a[itemprop=\"genre\"]");
                 const genres = genreElements.map((i, el) => $(el).text().trim()).get();
-                const genreUrls = genreElements.map((i, el) => $(el).attr('href')).get();
+                const genreUrls = genreElements.map((i, el) => $(el).attr("href")).get();
 
-                const latestChapter = $(element).find('div.col-chap a').text().trim();
-                const latestChapterUrl = $(element).find('div.col-chap a').attr('href');
+                const latestChapter = $(element).find("div.col-chap a").text().trim();
+                const latestChapterUrl = $(element).find("div.col-chap a").attr("href");
 
                 const chapterNumber = extractChapterNumber(latestChapter);
 
-
-                const updateTime = $(element).find('div.col-time').text().trim();
-                const slug = getSlugFromUrl(url)
-                const chapterSlug = slug + '/chuong-' + chapterNumber;
+                const updateTime = $(element).find("div.col-time").text().trim();
+                const slug = getSlugFromUrl(url);
+                const chapterSlug = slug + "/chuong-" + chapterNumber;
                 if (title && url) {
                     truyenDetails.push({
                         title,
@@ -146,11 +136,10 @@ class Source1 {
 
             });
 
-
             // In ra kết quả
             return truyenDetails;
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
         }
     }
 
@@ -159,32 +148,30 @@ class Source1 {
             // Gửi yêu cầu HTTP đến trang web với headers giả lập trình duyệt
             const { data } = await axios.get(url, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
 
             // Phân tích cú pháp HTML
             const $ = cheerio.load(data);
 
-
             // Lấy danh sách các truyện từ thẻ list-index
             const truyenDetails = [];
-            $('#list-index .row').each((index, element) => {
-                const title = $(element).find('h3[itemprop="name"] a').text().trim();
-                const url = $(element).find('h3[itemprop="name"] a').attr('href');
-                const genreElements = $(element).find('div.col-cat a[itemprop="genre"]');
+            $("#list-index .row").each((index, element) => {
+                const title = $(element).find("h3[itemprop=\"name\"] a").text().trim();
+                const url = $(element).find("h3[itemprop=\"name\"] a").attr("href");
+                const genreElements = $(element).find("div.col-cat a[itemprop=\"genre\"]");
                 const genres = genreElements.map((i, el) => $(el).text().trim()).get();
-                const genreUrls = genreElements.map((i, el) => $(el).attr('href')).get();
+                const genreUrls = genreElements.map((i, el) => $(el).attr("href")).get();
 
-                const latestChapter = $(element).find('div.col-chap a').text().trim();
-                const latestChapterUrl = $(element).find('div.col-chap a').attr('href');
+                const latestChapter = $(element).find("div.col-chap a").text().trim();
+                const latestChapterUrl = $(element).find("div.col-chap a").attr("href");
 
                 const chapterNumber = extractChapterNumber(latestChapter);
 
-
-                const updateTime = $(element).find('div.col-time').text().trim();
-                const slug = getSlugFromUrl(url)
-                const chapterSlug = slug + '/chuong-' + chapterNumber;
+                const updateTime = $(element).find("div.col-time").text().trim();
+                const slug = getSlugFromUrl(url);
+                const chapterSlug = slug + "/chuong-" + chapterNumber;
                 if (title && url) {
                     truyenDetails.push({
                         title,
@@ -201,21 +188,20 @@ class Source1 {
 
             });
 
-
             // In ra kết quả
             return truyenDetails;
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error("Error fetching data:", error);
         }
     }
 
     async scrapeNovelInfo(slug) {
         try {
-            const novelUrl = url + '/' + slug;
+            const novelUrl = url + "/" + slug;
             // Fetch the HTML from the given URL
             const { data } = await axios.get(novelUrl, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
 
@@ -224,14 +210,14 @@ class Source1 {
             // console.log(data)
 
             // Extract novel information
-            const title = $('h3.title[itemprop="name"]').text().trim();
-            const image = $('img[itemprop="image"]').attr('src');
-            const author = $('a[itemprop="author"]').text().trim();
-            const authorUrl = $('a[itemprop="author"]').attr('href');
-            const totalPage = $('#total-page').val();
+            const title = $("h3.title[itemprop=\"name\"]").text().trim();
+            const image = $("img[itemprop=\"image\"]").attr("src");
+            const author = $("a[itemprop=\"author\"]").text().trim();
+            const authorUrl = $("a[itemprop=\"author\"]").attr("href");
+            const totalPage = $("#total-page").val();
 
             const genres = [];
-            $('a[itemprop="genre"]').each((i, el) => {
+            $("a[itemprop=\"genre\"]").each((i, el) => {
                 genres.push($(el).text().trim());
             });
             const uniqueGenres = [];
@@ -244,26 +230,25 @@ class Source1 {
                 }
             });
             const genreUrls = [];
-            $('a[itemprop="genre"]').each((i, el) => {
-                genreUrls.push($(el).attr('href'));
+            $("a[itemprop=\"genre\"]").each((i, el) => {
+                genreUrls.push($(el).attr("href"));
             });
             // console.log(genres)
 
-            const source = $('.source').text().trim();
-            const status = $('.text-success').text().trim();
-            const ratingValue = $('span[itemprop="ratingValue"]').text().trim();
-            const ratingCount = $('span[itemprop="ratingCount"]').text().trim();
-            const description = $('div.desc-text[itemprop="description"]').html();
+            const source = $(".source").text().trim();
+            const status = $(".text-success").text().trim();
+            const ratingValue = $("span[itemprop=\"ratingValue\"]").text().trim();
+            const ratingCount = $("span[itemprop=\"ratingCount\"]").text().trim();
+            const description = $("div.desc-text[itemprop=\"description\"]").html();
 
             // Extract chapters information
             const chapters = [];
-            $('.list-chapter li a').each((i, el) => {
+            $(".list-chapter li a").each((i, el) => {
                 const chapterTitle = $(el).text().trim();
-                const chapterUrl = $(el).attr('href');
+                const chapterUrl = $(el).attr("href");
                 const chapterSlug = slug + "/chuong-" + (i + 1);
                 chapters.push({ chapterTitle, chapterUrl, chapterSlug });
             });
-
 
             // Return the extracted informatiosn
             return {
@@ -285,17 +270,17 @@ class Source1 {
                 totalPage
             };
         } catch (error) {
-            console.error('Error fetching novel info:', error);
+            console.error("Error fetching novel info:", error);
         }
     }
 
     async scrapeNovelInfoByPage(slug, name, page) {
         try {
-            const novelUrl = url + '/' + slug;
+            const novelUrl = url + "/" + slug;
             // Fetch the HTML from the given URL
             const { data } = await axios.get(novelUrl, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
 
@@ -304,14 +289,14 @@ class Source1 {
             // console.log(data)
 
             // Extract novel information
-            const title = $('h3.title[itemprop="name"]').text().trim();
-            const image = $('img[itemprop="image"]').attr('src');
-            const author = $('a[itemprop="author"]').text().trim();
-            const authorUrl = $('a[itemprop="author"]').attr('href');
-            const totalPage = $('#total-page').val();
+            const title = $("h3.title[itemprop=\"name\"]").text().trim();
+            const image = $("img[itemprop=\"image\"]").attr("src");
+            const author = $("a[itemprop=\"author\"]").text().trim();
+            const authorUrl = $("a[itemprop=\"author\"]").attr("href");
+            const totalPage = $("#total-page").val();
 
             const genres = [];
-            $('a[itemprop="genre"]').each((i, el) => {
+            $("a[itemprop=\"genre\"]").each((i, el) => {
                 genres.push($(el).text().trim());
             });
             const uniqueGenres = [];
@@ -324,26 +309,25 @@ class Source1 {
                 }
             });
             const genreUrls = [];
-            $('a[itemprop="genre"]').each((i, el) => {
-                genreUrls.push($(el).attr('href'));
+            $("a[itemprop=\"genre\"]").each((i, el) => {
+                genreUrls.push($(el).attr("href"));
             });
             // console.log(genres)
 
-            const source = $('.source').text().trim();
-            const status = $('.text-success').text().trim();
-            const ratingValue = $('span[itemprop="ratingValue"]').text().trim();
-            const ratingCount = $('span[itemprop="ratingCount"]').text().trim();
-            const description = $('div.desc-text[itemprop="description"]').html();
+            const source = $(".source").text().trim();
+            const status = $(".text-success").text().trim();
+            const ratingValue = $("span[itemprop=\"ratingValue\"]").text().trim();
+            const ratingCount = $("span[itemprop=\"ratingCount\"]").text().trim();
+            const description = $("div.desc-text[itemprop=\"description\"]").html();
 
             // Extract chapters information
             const chapters = [];
-            $('.list-chapter li a').each((i, el) => {
+            $(".list-chapter li a").each((i, el) => {
                 const chapterTitle = $(el).text().trim();
-                const chapterUrl = $(el).attr('href');
+                const chapterUrl = $(el).attr("href");
                 const chapterSlug = name + "/chuong-" + ((i + 1) + (parseInt(page) - 1) * 50);
                 chapters.push({ chapterTitle, chapterUrl, chapterSlug });
             });
-
 
             // Return the extracted informatiosn
             return {
@@ -365,7 +349,7 @@ class Source1 {
                 totalPage
             };
         } catch (error) {
-            console.error('Error fetching novel info:', error);
+            console.error("Error fetching novel info:", error);
         }
     }
 
@@ -375,7 +359,7 @@ class Source1 {
             // Fetch the HTML content from the URL
             const { data } = await axios.get(chapterUrl, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
 
@@ -383,17 +367,17 @@ class Source1 {
             const $ = cheerio.load(data);
 
             // Extract the story name
-            const storyName = $('a.truyen-title').text().trim();
+            const storyName = $("a.truyen-title").text().trim();
 
             // Extract the chapter title
-            const chapterTitle = $('a.chapter-title').text().trim();
-            $('#ads-chapter-pc-top').remove();
+            const chapterTitle = $("a.chapter-title").text().trim();
+            $("#ads-chapter-pc-top").remove();
 
             // Extract the chapter content
-            const chapterContent = $('#chapter-c')
+            const chapterContent = $("#chapter-c")
                 .html()
-                .replace(/<br\s*\/?>/gi, '\n')
-                .replace(/<\/?p>/gi, '')
+                .replace(/<br\s*\/?>/gi, "\n")
+                .replace(/<\/?p>/gi, "")
                 .trim();
 
             // Create the result object
@@ -414,7 +398,7 @@ class Source1 {
         try {
             const { data } = await axios.get(url, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
             const $ = cheerio.load(data);
@@ -422,75 +406,70 @@ class Source1 {
             const genres = [];
 
             // Select the genre list
-            $('.dropdown-menu.multi-column .row .col-md-4 ul.dropdown-menu li a').each((index, element) => {
+            $(".dropdown-menu.multi-column .row .col-md-4 ul.dropdown-menu li a").each((index, element) => {
                 const genre = $(element).text().trim();
-                const genreUrl = $(element).attr('href').trim();
-                const slug = getGenreSlugFromUrl(genreUrl)
+                const genreUrl = $(element).attr("href").trim();
+                const slug = getGenreSlugFromUrl(genreUrl);
                 genres.push({ genre, genreUrl, slug });
             });
 
             const danhSachList = [];
 
             // Selecting the appropriate list elements within the "Danh sách" dropdown
-            $('li:contains("Danh sách") .dropdown-menu li a').each((index, element) => {
+            $("li:contains(\"Danh sách\") .dropdown-menu li a").each((index, element) => {
                 const title = $(element).text().trim();
-                const link = $(element).attr('href').trim();
-                const slug = getGenreSlugFromUrl(link)
+                const link = $(element).attr("href").trim();
+                const slug = getGenreSlugFromUrl(link);
                 danhSachList.push({ title, url: link, slug });
             });
 
             const options = [];
-            $('#hot-select option').each((index, element) => {
-                const value = $(element).attr('value').trim();
+            $("#hot-select option").each((index, element) => {
+                const value = $(element).attr("value").trim();
                 const text = $(element).text().trim();
                 options.push({ value, text });
             });
 
-
-            const result = { genres, danhSachList, options }
+            const result = { genres, danhSachList, options };
             return result;
         } catch (error) {
-            console.error('Error scraping genres:', error);
+            console.error("Error scraping genres:", error);
             return [];
         }
-
 
     }
 
     async scrapeNovelByGenre(type, slug) {
-        let baseUrl
-        if (type == 'genre') {
+        let baseUrl;
+        if (type == "genre") {
 
-            baseUrl = url + '/the-loai/' + slug;
+            baseUrl = url + "/the-loai/" + slug;
+        } else if (type == "topic") {
+            baseUrl = url + "/danh-sach/" + slug;
+        } else if (type == "search") {
+            baseUrl = url + "/tim-kiem/" + slug;
         }
-        else if (type == "topic") {
-            baseUrl = url + '/danh-sach/' + slug
-        }
-        else if (type == "search") {
-            baseUrl = url + '/tim-kiem/' + slug;
-        }
-
 
         try {
             const { data } = await axios.get(baseUrl, {
                 headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
                 }
             });
             const $ = cheerio.load(data);
 
             const novels = [];
 
-            $('.list .row').each((index, element) => {
-                const titleElement = $(element).find('.truyen-title a');
-                const title = titleElement.attr('title');
-                const link = titleElement.attr('href');
-                const image = $(element).find('[data-image]').attr('data-image');
+            $(".list .row").each((index, element) => {
+                const titleElement = $(element).find(".truyen-title a");
+                const title = titleElement.attr("title");
+                const link = titleElement.attr("href");
+                const image = $(element).find("[data-image]").attr("data-image");
 
                 if (title) {
-                    const author = $(element).find('.author').text().trim();
-                    const chapter = $(element).find('.text-info a').text().replace('Chương ', '').trim();
-                    const slug = getSlugFromUrl(link)
+                    const author = $(element).find(".author").text().trim();
+                    const chapter = $(element).find(".text-info a").text().replace("Chương ", "").trim();
+                    const slug = getSlugFromUrl(link);
 
                     const novel = {
                         title,
@@ -504,12 +483,11 @@ class Source1 {
                     novels.push(novel);
                 }
 
-
             });
 
             return novels;
         } catch (error) {
-            console.error('Error scraping data:', error);
+            console.error("Error scraping data:", error);
             return [];
         }
     }

@@ -1,6 +1,6 @@
 // const { join } = require('path');
-const Source1 = require('../config/source1')
-const Source2 = require('../config/source2')
+const Source1 = require("../config/source1");
+const Source2 = require("../config/source2");
 
 function extractChapterNumber(chapterTitle) {
     const regex = /chuong-(\d+)/i;
@@ -12,17 +12,25 @@ class NovelController {
     async genre(req, res) {
         const slug = req.params.name;
         const navbarList = await Source1.scrapeGenres();
-        const novelList = await Source1.scrapeNovelByGenre("genre", slug)
+        const novelList = await Source1.scrapeNovelByGenre("genre", slug);
 
-        res.render("novel/viewByGenre", { genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList })
+        res.render("novel/viewByGenre", {
+            genresList: navbarList.genres,
+            topicsList: navbarList.danhSachList,
+            novelList
+        });
     }
 
     async topic(req, res) {
         const slug = req.params.name;
         const navbarList = await Source1.scrapeGenres();
-        const novelList = await Source1.scrapeNovelByGenre("topic", slug)
+        const novelList = await Source1.scrapeNovelByGenre("topic", slug);
 
-        res.render("novel/viewByGenre", { genresList: navbarList.genres, topicsList: navbarList.danhSachList, novelList })
+        res.render("novel/viewByGenre", {
+            genresList: navbarList.genres,
+            topicsList: navbarList.danhSachList,
+            novelList
+        });
     }
 
     async read(req, res) {
@@ -30,19 +38,17 @@ class NovelController {
         const name = req.baseUrl;
         const chapter = req.params.chapter;
         const chapterSlug = name + "/" + chapter;
-        const chapterNumber = extractChapterNumber(chapter)
-        let content
+        const chapterNumber = extractChapterNumber(chapter);
+        let content;
 
         const novelDetail = await Source1.scrapeNovelInfo(name.slice(1));
         if (!isNaN(parseInt(server))) {
             if (parseInt(server) == 1) {
                 content = await Source1.scrapeChapterData(chapterSlug);
-            }
-            else if (parseInt(server) == 2) {
+            } else if (parseInt(server) == 2) {
                 content = await Source2.scrapeChapterData(chapterSlug);
             }
-        }
-        else {
+        } else {
             content = await Source1.scrapeChapterData(chapterSlug);
         }
 
@@ -66,17 +72,21 @@ class NovelController {
             historyList.push({ name, chapterNumber });
         }
 
+        res.cookie("historyList", JSON.stringify(historyList), { maxAge: 86400000, httpOnly: true });
 
-        res.cookie('historyList', JSON.stringify(historyList), { maxAge: 86400000, httpOnly: true });
-
-
-        res.cookie('currenNovel', name, { maxAge: 86400000 });
-        res.cookie('currenChapter', chapterNumber, { maxAge: 86400000 });
+        res.cookie("currenNovel", name, { maxAge: 86400000 });
+        res.cookie("currenChapter", chapterNumber, { maxAge: 86400000 });
         if (isNaN(server)) {
-            server = 1
+            server = 1;
         }
 
-        res.render("novel/read", { server, baseUrl: chapterSlug, title: novelDetail.title, content, chapters: novelDetail.chapters, currentNovel: name, currentChapter: chapterNumber })
+        res.render("novel/read", {
+            server, baseUrl: chapterSlug,
+            title: novelDetail.title, content,
+            chapters: novelDetail.chapters,
+            currentNovel: name,
+            currentChapter: chapterNumber
+        });
     }
 }
 
