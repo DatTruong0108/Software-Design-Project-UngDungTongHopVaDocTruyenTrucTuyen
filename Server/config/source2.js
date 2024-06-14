@@ -1,9 +1,13 @@
 // const { Scraper, Root, CollectContent, OpenLinks } = require('nodejs-web-scraper');
 const axios = require("axios");
 const cheerio = require("cheerio");
+const source = require("./source");
 // const { options } = require('../routes/home');
+console.log()
 
 const url = "https://truyen.tangthuvien.vn";
+console.log("s2")
+source.getInstance();
 
 class Source2 {
     async scrapeChapterData(slug) {
@@ -49,6 +53,9 @@ class Source2 {
         }
     }
 }
+
+
+
 
 module.exports = new Source2;
 

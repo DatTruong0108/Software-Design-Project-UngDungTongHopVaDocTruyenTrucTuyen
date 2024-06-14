@@ -2,9 +2,12 @@
 // const { Scraper, Root, CollectContent, OpenLinks } = require('nodejs-web-scraper');
 const axios = require("axios");
 const cheerio = require("cheerio");
+const source = require("./source");
 // const { options } = require('../routes/home');
 
 const url = "https://truyenfull.vn";
+console.log("s1")
+source.getInstance();
 
 function getSlugFromUrl(url) {
     if (url) {
@@ -29,6 +32,7 @@ function extractChapterNumber(chapterTitle) {
     const match = chapterTitle.match(regex);
     return match ? match[1] : null;
 }
+
 
 class Source1 {
     async srapeHotNovelsListByGenre(url) {
@@ -493,5 +497,7 @@ class Source1 {
     }
 
 }
+
+
 
 module.exports = new Source1;

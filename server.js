@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const express = require('express');
 const {engine} = require('express-handlebars');
@@ -7,7 +8,7 @@ const methodOverride = require("method-override");
 const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 
-
+const configs = require('././Server/config/');
 const route=require("./Server/routes");
 
 const app = express();

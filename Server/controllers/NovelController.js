@@ -1,6 +1,9 @@
 // const { join } = require('path');
 const Source1 = require("../config/source1");
-const Source2 = require("../config/source2");
+const source=require("../config/source")
+
+console.log(source.getInstanceCount())
+
 
 function extractChapterNumber(chapterTitle) {
     const regex = /chuong-(\d+)/i;
@@ -56,13 +59,9 @@ class NovelController {
         console.log(list[60])
 
         if (!isNaN(parseInt(server))){
-            if (parseInt(server)==1){
-                content=await Source1.scrapeChapterData(chapterSlug);
-
-            }
-            else if (parseInt(server)==2){
-                content=await Source2.scrapeChapterData(chapterSlug);
-            }
+            const s=require(`../config/source${server}`)
+            content = await s.scrapeChapterData(chapterSlug);
+            //console.log(content)
         } else {
             content = await Source1.scrapeChapterData(chapterSlug);
         }
@@ -100,7 +99,8 @@ class NovelController {
             title: novelDetail.title, content,
             chapters: list,
             currentNovel: name,
-            currentChapter: chapterNumber
+            currentChapter: chapterNumber,
+            totalServer: source.getInstanceCount()
         });
     }
 }
