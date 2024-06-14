@@ -59,7 +59,7 @@
     <p>Nếu không xem được truyện vui lòng đổi <strong>“SERVER ẢNH”</strong> bên dưới</p>
     <div id="button-container">
         {{#times totalServer}}
-           <button type="button" class="server-button btn btn-secondary mb-4"><a style="color: #EFF8FE;"
+           <button type="button" id="server{{sum @index 1}}-btn" class="server-button btn btn-secondary mb-4"><a style="color: #EFF8FE;"
                 class="text-link" href="{{baseUrl}}?server={{sum @index 1}}">Server {{sum @index 1}}</a></button>
            
         {{/times}}
@@ -146,17 +146,10 @@
         return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
 
-    // Lấy giá trị của tham số 'server' từ URL
-    {{!-- let server = getParameterByName('server');
+    let server = getParameterByName('server');
+    document.getElementById(`server${server}-btn`).classList.remove('btn-secondary');
+    document.getElementById(`server${server}-btn`).classList.add('btn-success');
 
-    // Thiết lập lớp CSS cho các nút dựa trên giá trị của tham số 'server'
-    if (server === '1' || server === null) {
-        document.getElementById('server1-btn').classList.add('btn-success');
-        document.getElementById('server2-btn').classList.add('btn-secondary');
-    } else if (server === '2') {
-        document.getElementById('server1-btn').classList.add('btn-secondary');
-        document.getElementById('server2-btn').classList.add('btn-success');
-    } --}}
     // Get the container element that holds all buttons
 
     document.addEventListener('DOMContentLoaded', function () {
