@@ -56,7 +56,7 @@ class NovelController {
             list.push({chapterTitle: "Chương "+(i+1), chapterSlug:`${novelDetail.slug}/chuong-${i+1}`})
         }
 
-        console.log(list[60])
+        //console.log(list[60])
 
         if (!isNaN(parseInt(server))){
             const s=require(`../config/source${server}`)

@@ -10,10 +10,10 @@
           {{#ifEqual currentChapter -1}}
           <a href="" style="background: #696969; color: white; pointer-events: none;" class="btn mx-2">Đọc tiếp</a>
           {{else}}
-          <a href="/{{novel.slug}}/chuong-{{currentChapter}}" style="background: #EB455F; color: white;"
+          <a href="/{{novel.slug}}/chuong-{{currentChapter}}?server=1" style="background: #EB455F; color: white;"
             class="btn mx-2">Đọc tiếp</a>
           {{/ifEqual}}
-          <a href="/{{novel.slug}}/chuong-1" style="background: #EB455F; color: white;" class="btn mx-2">Đọc từ đầu</a>
+          <a href="/{{novel.slug}}/chuong-1?server=1" style="background: #EB455F; color: white;" class="btn mx-2">Đọc từ đầu</a>
         </div>
       </div>
       <div class="col-md-7 product-info">

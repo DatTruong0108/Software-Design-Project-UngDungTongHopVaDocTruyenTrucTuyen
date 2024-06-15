@@ -333,8 +333,10 @@
         });
 
         $('#export-form').on('submit', async function (e) {
+            console.log("in")
 
             e.preventDefault();
+            console.log("in")
             const exportType = $('#exportType').val();
             const chapterExport = $('#chapterExport').val();
             const currNovel = $('#currNovel').val()

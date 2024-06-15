@@ -144,7 +144,7 @@ async function createPdf(name, chapter) {
             // 1. Thêm một trang PDF với nội dung là chapterTitle ở giữa trang
             const titlePage = pdfDoc.addPage();
             const splitLines = splitTextIntoLines(chapterContent.chapterTitle, boldFont, titleFontSize, width - 50);
-            const hy = height / 2;
+            var hy = height / 2;
             splitLines.forEach(splitLine => {
                 titlePage.drawText(splitLine, {
                     x: (width - boldFont.widthOfTextAtSize(splitLine, titleFontSize)) / 2,
@@ -191,7 +191,7 @@ async function createPdf(name, chapter) {
         const chapterContent = await Source1.scrapeChapterData(exportChapterSlug);
         const titlePage = pdfDoc.addPage();
         const splitLines = splitTextIntoLines(chapterContent.chapterTitle, boldFont, titleFontSize, width - 50);
-        const hy = height / 2;
+        var hy = height / 2;
         splitLines.forEach(splitLine => {
             titlePage.drawText(splitLine, {
                 x: (width - boldFont.widthOfTextAtSize(splitLine, titleFontSize)) / 2,
@@ -425,6 +425,10 @@ class FileController {
         const chapterExport = req.body.chapterExport;
         const fileType = req.body.exportType;
         const currenNovel = req.body.currNovel;
+        console.log(chapterExport);
+        console.log(fileType);
+
+        console.log(currenNovel);
 
         const filenameSlug = currenNovel.slice(1) + "-" + chapterExport;
         const filename = filenameSlug.replace(/-/g, "_");
