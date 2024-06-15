@@ -7,7 +7,8 @@
       </h1>
     </div>
     <form class="col-11 search-field form-inline d-flex mx-auto" id="searchForm" action="" role="search">
-      <input class="form-control" id="searchInput" type="search" placeholder="Nhập tên truyện hoặc tác giả" aria-label="Search">
+      <input class="form-control" id="searchInput" type="search" placeholder="Nhập tên truyện hoặc tác giả"
+        aria-label="Search">
       <button class="btn btn-search" type="submit">Tìm kiếm</button>
     </form>
   </div>
@@ -23,33 +24,37 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown" style="margin-left: 40px;">
-            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Danh sách</span>
             </a>
-           <ul id="genresList" class="dropdown-menu custom-dropdown-menu">
+            <ul id="genresList" class="dropdown-menu custom-dropdown-menu">
               {{#each topicsList}}
-                <li><a class="dropdown-item cus-text" href="{{this.url}}">{{this.title}}</a></li>
+              <li><a class="dropdown-item cus-text" href="/topic/{{this.slug}}">{{this.title}}</a></li>
               {{/each}}
             </ul>
           </li>
           <li class="nav-item dropdown" style="margin-left: 30px;">
-            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               <i class="list-icon fa-solid fa-list"></i>&nbsp<span class="text-icon">Thể loại</span>
             </a>
             <ul id="genresList" class="dropdown-menu custom-dropdown-menu">
               {{#each genresList}}
-                <li><a class="dropdown-item cus-text" href="{{this.genreUrl}}">{{this.genre}}</a></li>
+              <li><a class="dropdown-item cus-text" href="/genre/{{this.slug}}">{{this.genre}}</a></li>
               {{/each}}
             </ul>
           </li>
           <li class="nav-item dropdown" style="margin-left: 30px;">
-            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link white-icon dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
               <i class="fa-solid fa-gear white-icon"></i>&nbsp<span class="text-icon">Tùy chỉnh</span>
             </a>
             <ul class="dropdown-menu custom-dropdown-menu" style="min-width: 350px;">
               <li class="d-flex justify-content: space-between; align-items-center">
                 <a id="text-select1" class="dropdown-menu-text" style="display: none;">Size chữ</a>
-                <select id="text-content-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
+                <select id="text-content-select" style="display: none;" class="form-select custom-select"
+                  aria-label="Default select example">
                   <option value="size-16">16</option>
                   <option value="size-18">18</option>
                   <option value="size-20" selected>20</option>
@@ -63,50 +68,54 @@
                   <option value="size-36">36</option>
                   <option value="size-38">38</option>
                   <option value="size-40">40</option>
-                </select>       
+                </select>
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
                 <a id="text-select2" class="dropdown-menu-text" style="display: none;">Font chữ</a>
-                <select id="font-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
+                <select id="font-select" style="display: none;" class="form-select custom-select"
+                  aria-label="Default select example">
                   <option value="font-roboto" selected>Roboto</option>
                   <option value="font-timesnewroman">Times New Roman</option>
                   <option value="font-helvetica">Helvetica</option>
                   <option value="font-arial">Arial</option>
-                </select>       
+                </select>
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
                 <a class="dropdown-menu-text">Màu nền</a>
-                <select id="background-color-select" class="form-select custom-select" aria-label="Default select example">
+                <select id="background-color-select" class="form-select custom-select"
+                  aria-label="Default select example">
                   <option value="bg-white" selected>Màu trắng</option>
                   <option value="bg-cream">Màu kem</option>
                   <option value="bg-peachpuff">Màu hồng đào</option>
                   <option value="bg-gray">Màu xám nhạt</option>
-                </select>       
+                </select>
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
                 <a id="text-select3" style="display: none;" class="dropdown-menu-text">Màu chữ</a>
-                <select id="text-color-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
+                <select id="text-color-select" style="display: none;" class="form-select custom-select"
+                  aria-label="Default select example">
                   <option value="text-color-black" selected>Đen</option>
                   <option value="text-color-red">Đỏ</option>
                   <option value="text-color-green">Xanh lá</option>
                   <option value="text-color-blue">Xanh dương</option>
                   <option value="text-color-orange">Cam</option>
-                </select>       
+                </select>
               </li>
 
               <li class="d-flex justify-content: space-between; align-items-center mt-2">
                 <a id="text-select4" style="display: none;" class="dropdown-menu-text">Độ dãn dòng</a>
-                <select id="line-height-select" style="display: none;" class="form-select custom-select" aria-label="Default select example">
+                <select id="line-height-select" style="display: none;" class="form-select custom-select"
+                  aria-label="Default select example">
                   <option value="line-height-1">1.0</option>
                   <option value="line-height-1-1-5" selected>1.15</option>
                   <option value="line-height-1-5">1.5</option>
                   <option value="line-height-2">2.0</option>
                   <option value="line-height-2-5">2.5</option>
                   <option value="line-height-3">3.0</option>
-                </select>       
+                </select>
               </li>
             </ul>
           </li>

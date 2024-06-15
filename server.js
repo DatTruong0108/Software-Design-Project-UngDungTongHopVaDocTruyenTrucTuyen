@@ -1,3 +1,4 @@
+
 require('dotenv').config();
 const express = require('express');
 const {engine} = require('express-handlebars');
@@ -7,7 +8,7 @@ const methodOverride = require("method-override");
 const Handlebars = require('handlebars');
 const cookieParser = require('cookie-parser');
 
-
+const configs = require('././Server/config/');
 const route=require("./Server/routes");
 
 const app = express();
@@ -49,6 +50,16 @@ Handlebars.registerHelper('splitArray', function(array, parts, partIndex) {
     }
     return result;
 });
+Handlebars.registerHelper('times', function(n, block) {
+    var accum = '';
+    for(var i = 0; i < n; ++i) {
+        block.data.index = i;
+        block.data.first = i === 0;
+        block.data.last = i === (n - 1);
+        accum += block.fn(this);
+    }
+    return accum;
+});
 
 app.engine(
     'hbs',
@@ -60,7 +71,13 @@ app.engine(
             convertToHtml: Handlebars.helpers.convertToHtml,
             splitArray: Handlebars.helpers.splitArray,
             sum: (a, b) => Number(a) + Number(b),
-
+            ifEqual: function (a,b, opts) {
+                if (a.toString()==b.toString()) {
+                  return opts.fn(this);
+                }
+                return opts.inverse(this);
+            },
+            times: Handlebars.helpers.times
         }
     })
 );

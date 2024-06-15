@@ -5,6 +5,6 @@ const route = express.Router();
 
 const NovelController = require("../controllers/NovelController");
 
-route.get("/:chapter", NovelController.read);
+route.get("/:name", NovelController.genre);
 
 module.exports = route;
