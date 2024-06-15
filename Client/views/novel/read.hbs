@@ -95,7 +95,11 @@
     </nav>
 
     <div id="text-content" class="text-content text-justify mb-4">
-        {{{convertToHtml content.chapterContent}}}
+        {{#if content.chapterContent}}
+          {{{convertToHtml content.chapterContent}}}
+        {{else}}
+           <span>Không tìm thấy dữ liệu</span>
+        {{/if}}
     </div>
 
     <nav aria-label="Page navigation example">

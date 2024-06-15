@@ -11,8 +11,8 @@ class Singleton {
         return Singleton.instance;
     }
 
-    getInstance(s) {      
-        new Singleton(s);
+    getInstance() {      
+        new Singleton();
 
         return Singleton.instance;
     }
@@ -20,8 +20,6 @@ class Singleton {
      getInstanceCount() {
         return Singleton.instanceCount;
     }
-
-
 }
 
 module.exports = new Singleton;

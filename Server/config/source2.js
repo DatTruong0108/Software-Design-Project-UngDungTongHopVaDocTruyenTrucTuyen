@@ -3,7 +3,6 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const source = require("./source");
 // const { options } = require('../routes/home');
-console.log()
 
 const url = "https://truyen.tangthuvien.vn";
 console.log("s2")
