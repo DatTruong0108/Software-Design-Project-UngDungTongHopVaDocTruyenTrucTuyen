@@ -71,7 +71,7 @@
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
             <li class="page-item">
-                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{extract currentChapter 1}}"
+                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{extract currentChapter 1}}?server={{server}}"
                     aria-label="Previous">
                     <span aria-hidden="true"><i class="fa-solid fa-angles-left"></i> Chương trước</span>
                 </a>
@@ -80,13 +80,13 @@
                 <select id="chapterSelect" class="form-select select-chapter" aria-label="Default select example">
                     <option selected>Chương {{currentChapter}}</option>
                     {{#each chapters}}
-                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}/">Chương {{sum @index 1}}
+                    <option value="{{this.chapterTitle}}" data-href="/{{this.chapterSlug}}?server={{../server}}">Chương {{sum @index 1}}
                     </option></a>
                     {{/each}}
                 </select>
             </li>
             <li class="page-item">
-                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{sum currentChapter 1}}"
+                <a class="page-link select-chap" href="{{currentNovel}}/chuong-{{sum currentChapter 1}}?server={{server}}"
                     aria-label="Next">
                     <span aria-hidden="true">Chương sau <i class="fa-solid fa-angles-right"></i></span>
                 </a>
